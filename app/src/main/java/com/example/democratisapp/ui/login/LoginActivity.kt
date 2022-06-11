@@ -13,10 +13,13 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import com.example.democratis.classes.Account
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.databinding.ActivityLoginBinding
 
 import com.example.democratisapp.R
+import com.example.democratisapp.dao.AccountDao
+import com.example.democratisapp.database.DemocratisDB
 
 class LoginActivity : AppCompatActivity() {
 
@@ -90,7 +93,8 @@ class LoginActivity : AppCompatActivity() {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
                             username.text.toString(),
-                            password.text.toString()
+                            password.text.toString(),
+                            this.context
                         )
                 }
                 false
@@ -98,7 +102,8 @@ class LoginActivity : AppCompatActivity() {
 
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+                loginViewModel.login(username.text.toString(), password.text.toString(),
+                    this.context)
             }
         }
     }

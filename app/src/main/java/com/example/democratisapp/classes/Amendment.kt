@@ -11,7 +11,7 @@ import java.util.*
         parentColumns = arrayOf("propositionId"),
         childColumns = arrayOf("propositionId"),
         onDelete = ForeignKey.CASCADE)])
-class Amendment (@PrimaryKey private val ammendmentId :Long,
-                 @ColumnInfo(name="submitDate") private var submitDate: Date,
-                 @ColumnInfo(name = "content") private var content:String,
-                 private var propositionId:Int)
+data class Amendment (@PrimaryKey(autoGenerate = true) val ammendmentId :Long,
+                 @ColumnInfo(name="submitDate") var submitDate: String,
+                 @ColumnInfo(name = "content") var content:String,
+                 var propositionId:Int)

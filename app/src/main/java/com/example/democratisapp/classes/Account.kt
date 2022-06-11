@@ -5,6 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "account")
-data class Account (@PrimaryKey val accountId:Long,
-               @ColumnInfo(name = "mail") private var mail:String,
-               @ColumnInfo(name = "password") private var password:String)
+data class Account (@PrimaryKey(autoGenerate = true) val accountId:Long = 0,
+                    @ColumnInfo(name = "username") var username:String,
+                    @ColumnInfo(name = "mail") var mail:String,
+                    @ColumnInfo(name = "password") var password:String){
+}

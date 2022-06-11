@@ -1,6 +1,9 @@
 package com.example.democratisapp.data
 
+import android.content.Context
+import com.example.democratis.classes.Account
 import com.example.democratisapp.data.model.LoggedInUser
+import com.example.democratisapp.database.DemocratisDB
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -8,6 +11,20 @@ import com.example.democratisapp.data.model.LoggedInUser
  */
 
 class LoginRepository(val dataSource: LoginDataSource) {
+
+    class ThreadLoginDB(var username:String,var password:String,
+                        var context:Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            db.accountDao().createAccount(Account(username=this.username,mail="test@mail.com",
+                password = this.password))
+            var acc: Account = db.accountDao().getUserById(1)
+            System.out.println("Account created !")
+            System.out.println("Username : " + acc.username)
+            System.out.println("Password : " + acc.password)
+            System.out.println("Username : " + acc.mail)
+        }
+    }
 
     // in-memory cache of the loggedInUser object
     var user: LoggedInUser? = null
@@ -27,11 +44,12 @@ class LoginRepository(val dataSource: LoginDataSource) {
         dataSource.logout()
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    fun login(username: String, password: String, context: Context): Result<LoggedInUser> {
         // handle login
         val result = dataSource.login(username, password)
 
         if (result is Result.Success) {
+            ThreadLoginDB(username,password,context).start()
             setLoggedInUser(result.data)
         }
 

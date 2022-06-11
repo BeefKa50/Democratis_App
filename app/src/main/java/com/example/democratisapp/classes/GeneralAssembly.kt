@@ -11,7 +11,7 @@ import java.util.*
         parentColumns = arrayOf("commissionId"),
         childColumns = arrayOf("commissionId"),
         onDelete = ForeignKey.CASCADE)])
-data class GeneralAssembly(@PrimaryKey private var assemblyId:Long,
-                      @ColumnInfo(name="startDate") private var startDate:Date,
-                      @ColumnInfo(name = "endDate") private var endDate:Date,
-                      private var commissionId:Int)
+data class GeneralAssembly(@PrimaryKey(autoGenerate = true) val assemblyId:Long,
+                      @ColumnInfo(name="startDate") var startDate:String,
+                      @ColumnInfo(name = "endDate") var endDate:String,
+                      var commissionId:Int)

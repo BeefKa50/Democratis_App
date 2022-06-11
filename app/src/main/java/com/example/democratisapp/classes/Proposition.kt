@@ -17,13 +17,13 @@ import java.util.*
         parentColumns = arrayOf("assemblyId"),
         childColumns = arrayOf("assemblyId"),
         onDelete = CASCADE)])
-data class Proposition (@PrimaryKey private val propositionId: Long,
-                        @ColumnInfo(name = "title") private var title:String,
-                        @ColumnInfo(name = "submitDate") private var submitDate:Date,
-                        @ColumnInfo(name = "status") private var status:String,
-                        @ColumnInfo(name = "authorId") private var authorId:Int,
-                        @ColumnInfo(name = "nbSupports") private var nbSupports:Int,
-                        @ColumnInfo(name = "inFavorVotes") private var inFavorVotes:Int,
-                        @ColumnInfo(name = "againstVotes") private var againstVotes:Int,
-                        private var commissionId:Int,
-                        private var assemblyId:Int)
+data class Proposition (@PrimaryKey(autoGenerate = true) val propositionId: Long,
+                        @ColumnInfo(name = "title") var title:String,
+                        @ColumnInfo(name = "submitDate") var submitDate:String,
+                        @ColumnInfo(name = "status") var status:String,
+                        @ColumnInfo(name = "authorId") var authorId:Int,
+                        @ColumnInfo(name = "nbSupports") var nbSupports:Int,
+                        @ColumnInfo(name = "inFavorVotes") var inFavorVotes:Int,
+                        @ColumnInfo(name = "againstVotes") var againstVotes:Int,
+                        var commissionId:Int,
+                        var assemblyId:Int)

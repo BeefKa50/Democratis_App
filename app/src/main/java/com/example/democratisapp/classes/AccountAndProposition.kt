@@ -16,6 +16,6 @@ import com.example.democratis.classes.Proposition
         parentColumns = arrayOf("propositionId"),
         childColumns = arrayOf("propositionId"),
         onDelete = ForeignKey.CASCADE)])
-data class AccountAndProposition(@PrimaryKey private var id:Long,
-                                 private var accountId:Long,
-                                 private var propositionId:Long)
+data class AccountAndProposition(@PrimaryKey(autoGenerate = true) val id:Long,
+                                 var accountId:Long,
+                                 var propositionId:Long)

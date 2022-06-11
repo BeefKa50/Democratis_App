@@ -5,6 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "commission")
-data class Commission(@PrimaryKey val commissionId:Long,
-                      @ColumnInfo(name="name") private var name:String,
-                      @ColumnInfo(name="desc") private var desc:String)
+data class Commission(@PrimaryKey(autoGenerate = true) val commissionId:Long,
+                      @ColumnInfo(name="name") var name:String,
+                      @ColumnInfo(name="desc") var desc:String)
