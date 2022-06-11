@@ -1,5 +1,10 @@
 package com.example.democratis.classes
 
-class Account (private var username:String, private var password:String, private var mail:String, private var role:RoleEnum) {
-    private var propositions:ArrayList<Proposition> = ArrayList<Proposition>();
-}
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "account")
+data class Account (@PrimaryKey val accountId:Long,
+               @ColumnInfo(name = "mail") private var mail:String,
+               @ColumnInfo(name = "password") private var password:String)
