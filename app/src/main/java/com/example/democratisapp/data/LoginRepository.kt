@@ -16,10 +16,12 @@ class LoginRepository(val dataSource: LoginDataSource) {
                         var context:Context): Thread() {
         public override fun run() {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            db.accountDao().createAccount(Account(username=this.username,mail="test@mail.com",
+            //db.accountDao().deleteAccounts()
+            var id:Long = db.accountDao().createAccount(Account(username=this.username,mail="test@mail.com",
                 password = this.password))
-            var acc: Account = db.accountDao().getUserById(1)
-            System.out.println("Account created !")
+            var acc:Account = db.accountDao().getUserById(id)
+            System.out.println("------ Account -------")
+            System.out.println("Id : " + acc.accountId)
             System.out.println("Username : " + acc.username)
             System.out.println("Password : " + acc.password)
             System.out.println("Username : " + acc.mail)
