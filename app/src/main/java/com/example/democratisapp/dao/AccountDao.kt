@@ -18,8 +18,9 @@ interface AccountDao{
             "= accountAndProposition.propositionId WHERE accountId = :accountId")
     fun getUserPropositions(accountId: Long): List<Proposition>
 
-    @Query("SELECT accountId FROM  account WHERE mail = :login AND password = :password")
-    fun login(login:String, password:String): Long
+    @Query("SELECT EXISTS(SELECT * FROM account WHERE username = :login AND " +
+            "password = :password)")
+    fun login(login:String, password:String): Boolean
 
     @Insert
     fun createAccount(account: Account) : Long

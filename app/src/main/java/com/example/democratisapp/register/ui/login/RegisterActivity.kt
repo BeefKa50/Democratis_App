@@ -1,7 +1,6 @@
-package com.example.democratisapp.ui.login
+package com.example.democratisapp.register.ui.login
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,50 +13,32 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import com.example.democratis.classes.Account
 import com.example.democratisapp.MainActivity
-import com.example.democratisapp.databinding.ActivityLoginBinding
-
 import com.example.democratisapp.R
-import com.example.democratisapp.dao.AccountDao
-import com.example.democratisapp.database.DemocratisDB
-import com.example.democratisapp.register.ui.login.RegisterActivity
+import com.example.democratisapp.databinding.ActivityRegisterBinding
+import com.example.democratisapp.ui.login.LoginActivity
 
-class LoginActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
-    private lateinit var binding: ActivityLoginBinding
-
-    companion object{
-        private var loginSuccessful:Boolean = false
-    }
-
-    class ThreadCheckLogin(var username:String,var password:String,
-                        var context: Context
-    ): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            System.out.println("Username : [" + username + "] ; password :[" + password + "]")
-            loginSuccessful = db.accountDao().login(username,password)
-            System.out.println("IDDDD ----->>>> " + id)
-        }
-    }
+    private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val username = binding.username
         val password = binding.password
+        val mail = binding.email
         val login = binding.login
         val loading = binding.loading
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
-        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
+        loginViewModel.loginFormState.observe(this@RegisterActivity, Observer {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
@@ -71,30 +52,23 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
+        loginViewModel.loginResult.observe(this@RegisterActivity, Observer {
             val loginResult = it ?: return@Observer
 
             loading.visibility = View.GONE
             if (loginResult.error != null) {
-                showLoginFailed()
+                showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                var th:ThreadCheckLogin = ThreadCheckLogin(username.text.toString(),password.text.toString(),
-                this)
-                th.start()
-
-                th.join()
-
-                if(loginSuccessful) {
-                    val intent = Intent(this, MainActivity::class.java);
-                    startActivity(intent);
-                    updateUiWithUser(loginResult.success)
-                    finish()
-                }
-                else{
-                    showLoginFailed()
-                }
+                updateUiWithUser(loginResult.success)
             }
+
+            val intent = Intent(this, LoginActivity::class.java);
+            startActivity(intent);
+            setResult(Activity.RESULT_OK)
+
+            //Complete and destroy login activity once successful
+            finish()
         })
 
         username.afterTextChanged {
@@ -115,24 +89,31 @@ class LoginActivity : AppCompatActivity() {
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString(),
-                            this.context
-                        )
+                        if (mail != null) {
+                            loginViewModel.login(
+                                username.text.toString(),
+                                password.text.toString(),
+                                mail.text.toString(),
+                                this.context
+                            )
+                        }
                 }
                 false
             }
 
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString(),
-                    this.context)
-            }
-
-            binding.textView2?.setOnClickListener{
-                val intent = Intent(this.context,RegisterActivity::class.java);
-                startActivity(intent);
+                if (mail != null) {
+                    loginViewModel.login(username.text.toString(), password.text.toString(),
+                        mail.text.toString(), this.context)
+                }
+                else{
+                    Toast.makeText(
+                        applicationContext,
+                        "Tous les champs doivent être remplis pour créer un compte.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
     }
@@ -142,13 +123,13 @@ class LoginActivity : AppCompatActivity() {
         val displayName = model.displayName
         Toast.makeText(
             applicationContext,
-            "$welcome",
+            "Création de compte réussie !",
             Toast.LENGTH_LONG
         ).show()
     }
 
-    private fun showLoginFailed() {
-        Toast.makeText(applicationContext, "Echec de la connexion.", Toast.LENGTH_SHORT).show()
+    private fun showLoginFailed(@StringRes errorString: Int) {
+        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }
 
