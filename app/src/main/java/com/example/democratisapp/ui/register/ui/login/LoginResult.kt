@@ -1,4 +1,4 @@
-package com.example.democratisapp.register.ui.login
+package com.example.democratisapp.ui.register.ui.login
 
 /**
  * Authentication result : success (user details) or error message.

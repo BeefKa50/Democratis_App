@@ -1,4 +1,4 @@
-package com.example.democratisapp.register.ui.login
+package com.example.democratisapp.ui.register.ui.login
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import com.example.democratisapp.R
-import com.example.democratisapp.register.data.LoginRepository
-import com.example.democratisapp.register.data.Result
+import com.example.democratisapp.ui.register.data.LoginRepository
+import com.example.democratisapp.ui.register.data.Result
 
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {

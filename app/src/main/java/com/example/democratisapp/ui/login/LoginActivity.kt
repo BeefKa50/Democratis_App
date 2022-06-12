@@ -1,12 +1,10 @@
 package com.example.democratisapp.ui.login
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,14 +12,12 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import com.example.democratis.classes.Account
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.databinding.ActivityLoginBinding
 
 import com.example.democratisapp.R
-import com.example.democratisapp.dao.AccountDao
 import com.example.democratisapp.database.DemocratisDB
-import com.example.democratisapp.register.ui.login.RegisterActivity
+import com.example.democratisapp.ui.register.ui.login.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -143,7 +139,7 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(
             applicationContext,
             "$welcome",
-            Toast.LENGTH_LONG
+            Toast.LENGTH_SHORT
         ).show()
     }
 

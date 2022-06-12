@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/commissions"
-        android:name="com.example.democratisapp.ui.dashboard.DashboardFragment"
+        android:name="com.example.democratisapp.ui.commissions.CommissionsFragment"
         android:label="Commissions"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/compte"
-        android:name="com.example.democratisapp.ui.notifications.NotificationsFragment"
+        android:name="com.example.democratisapp.ui.account.AccountFragment"
         android:label="Mon compte"
         tools:layout="@layout/fragment_notifications" />
 

@@ -1,4 +1,4 @@
-package com.example.democratisapp.register.ui.login
+package com.example.democratisapp.ui.register.ui.login
 
 /**
  * Data validation state of the login form.

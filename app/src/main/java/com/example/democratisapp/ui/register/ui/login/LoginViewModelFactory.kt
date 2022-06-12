@@ -1,9 +1,9 @@
-package com.example.democratisapp.register.ui.login
+package com.example.democratisapp.ui.register.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.democratisapp.register.data.LoginDataSource
-import com.example.democratisapp.register.data.LoginRepository
+import com.example.democratisapp.ui.register.data.LoginDataSource
+import com.example.democratisapp.ui.register.data.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

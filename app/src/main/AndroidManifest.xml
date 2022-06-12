@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DemocratisApp">
         <activity
-            android:name=".register.ui.login.RegisterActivity"
+            android:name="com.example.democratisapp.ui.register.ui.login.RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register" />
         <activity

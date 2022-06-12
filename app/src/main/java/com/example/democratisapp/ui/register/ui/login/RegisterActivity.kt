@@ -1,4 +1,4 @@
-package com.example.democratisapp.register.ui.login
+package com.example.democratisapp.ui.register.ui.login
 
 import android.app.Activity
 import android.content.Intent
@@ -13,7 +13,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import com.example.democratisapp.MainActivity
 import com.example.democratisapp.R
 import com.example.democratisapp.databinding.ActivityRegisterBinding
 import com.example.democratisapp.ui.login.LoginActivity

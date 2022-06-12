@@ -1,4 +1,4 @@
-package com.example.democratisapp.register.data
+package com.example.democratisapp.ui.register.data
 
 /**
  * A generic class that holds a value with its loading status.

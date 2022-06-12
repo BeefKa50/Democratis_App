@@ -1,6 +1,6 @@
-package com.example.democratisapp.register.data
+package com.example.democratisapp.ui.register.data
 
-import com.example.democratisapp.register.data.model.LoggedInUser
+import com.example.democratisapp.ui.register.data.model.LoggedInUser
 import java.io.IOException
 
 /**

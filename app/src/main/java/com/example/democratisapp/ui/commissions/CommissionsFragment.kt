@@ -1,4 +1,4 @@
-package com.example.democratisapp.ui.dashboard
+package com.example.democratisapp.ui.commissions
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.democratisapp.databinding.FragmentDashboardBinding
 
-class DashboardFragment : Fragment() {
+class CommissionsFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
 
@@ -23,7 +23,7 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+            ViewModelProvider(this).get(CommissionsViewModel::class.java)
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root

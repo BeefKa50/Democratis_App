@@ -1,4 +1,4 @@
-package com.example.democratisapp.register.ui.login
+package com.example.democratisapp.ui.register.ui.login
 
 /**
  * User details post authentication that is exposed to the UI

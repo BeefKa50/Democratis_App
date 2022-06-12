@@ -1,9 +1,9 @@
-package com.example.democratisapp.register.data
+package com.example.democratisapp.ui.register.data
 
 import android.content.Context
 import com.example.democratis.classes.Account
 import com.example.democratisapp.database.DemocratisDB
-import com.example.democratisapp.register.data.model.LoggedInUser
+import com.example.democratisapp.ui.register.data.model.LoggedInUser
 
 /**
  * Class that requests authentication and user information from the remote data source and
