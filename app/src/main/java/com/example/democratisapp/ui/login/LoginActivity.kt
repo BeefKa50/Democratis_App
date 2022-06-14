@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import com.example.democratisapp.MainActivity
+import com.example.democratisapp.MainActivity.Companion.profileId
 import com.example.democratisapp.databinding.ActivityLoginBinding
 
 import com.example.democratisapp.R
@@ -35,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
             System.out.println("Username : [" + username + "] ; password :[" + password + "]")
             loginSuccessful = db.accountDao().login(username,password)
+            profileId = db.accountDao().getUser(username,password)
             System.out.println("IDDDD ----->>>> " + id)
         }
     }

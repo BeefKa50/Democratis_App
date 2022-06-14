@@ -19,7 +19,8 @@ class LoginRepository(val dataSource: LoginDataSource) {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
             //db.accountDao().deleteAccounts()
             var id:Long = db.accountDao().createAccount(
-                Account(username=this.username,mail=this.mail,
+                Account(
+                    picture =null, username =this.username, mail =this.mail,
                 password = this.password)
             )
             var acc: Account = db.accountDao().getUserById(id)

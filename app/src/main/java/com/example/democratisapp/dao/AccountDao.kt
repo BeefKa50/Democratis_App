@@ -22,6 +22,9 @@ interface AccountDao{
             "password = :password)")
     fun login(login:String, password:String): Boolean
 
+    @Query("SELECT accountId from account WHERE username = :login AND password = :password")
+    fun getUser(login:String, password:String): Long
+
     @Insert
     fun createAccount(account: Account) : Long
 
