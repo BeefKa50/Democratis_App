@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.democratis.classes.Commission
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.database.DemocratisDB
-import com.example.democratisapp.databinding.FragmentDashboardBinding
+import com.example.democratisapp.databinding.FragmentCommissionsBinding
 import com.example.democratisapp.ui.login.LoginActivity
 import com.example.kotlindeezer.ui.RecyclerCommissionAdapter
 
 class CommissionsFragment : Fragment() {
 
-    private var _binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentCommissionsBinding? = null
 
     companion object{
         var commissions: List<Commission>? = null
@@ -49,7 +49,7 @@ class CommissionsFragment : Fragment() {
         val dashboardViewModel =
             ViewModelProvider(this).get(CommissionsViewModel::class.java)
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentCommissionsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         fragmentContext = this.requireContext()
 

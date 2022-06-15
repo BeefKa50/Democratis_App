@@ -14,14 +14,14 @@ import com.example.democratis.classes.Account
 import com.example.democratis.classes.Commission
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.database.DemocratisDB
-import com.example.democratisapp.databinding.FragmentNotificationsBinding
+import com.example.democratisapp.databinding.FragmentAccountBinding
 import com.example.democratisapp.ui.commissions.CommissionsFragment
 import com.example.democratisapp.ui.login.LoginActivity
 import com.example.kotlindeezer.ui.RecyclerCommissionAdapter
 
 class AccountFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentAccountBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -58,7 +58,7 @@ class AccountFragment : Fragment() {
         val notificationsViewModel =
             ViewModelProvider(this).get(AccountViewModel::class.java)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         var th: ThreadGetUser? = null
