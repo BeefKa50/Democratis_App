@@ -20,14 +20,14 @@
             <!-- Media -->
 
             <TextView
-                android:id="@+id/commissionName"
+                android:id="@+id/propositionName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Commission"
                 android:textAppearance="?attr/textAppearanceHeadline6" />
 
             <TextView
-                android:id="@+id/commissionMembers"
+                android:id="@+id/propositionSupport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0 membres"
