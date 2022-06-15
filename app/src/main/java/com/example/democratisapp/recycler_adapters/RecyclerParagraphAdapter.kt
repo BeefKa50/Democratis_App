@@ -1,6 +1,8 @@
 package com.example.democratisapp.recycler_adapters
 
 import android.content.Context
+import android.graphics.text.LineBreaker
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,14 +11,17 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.democratis.classes.Paragraph
+import com.example.democratis.classes.Proposition
 import com.example.democratisapp.R
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.RecyclerItemParagraphBinding
+import com.example.kotlindeezer.ui.RecyclerCommissionAdapter
 
 class RecyclerParagraphAdapter(private val data: List<Paragraph>, val parentFragment: Fragment) : RecyclerView.Adapter<RecyclerParagraphAdapter.ParagraphViewHolder>(){
     companion object {
         private const val TAG = "ParagraphViewHolder"
         lateinit var paragraphs:List<Paragraph>
+        lateinit var proposition:Proposition
     }
 
     inner class ParagraphViewHolder(val binding: RecyclerItemParagraphBinding) :
@@ -39,6 +44,9 @@ class RecyclerParagraphAdapter(private val data: List<Paragraph>, val parentFrag
 
         holder.binding.paragraphTitle.setText("Paragraphe " + paragraph.num.toString())
         holder.binding.paragraphContent.setText(paragraph.content)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            holder.binding.paragraphContent.justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
+        }
 
 //        holder.binding.card.setOnClickListener{
 //            val args = bundleOf("id" to proposition.propositionId)

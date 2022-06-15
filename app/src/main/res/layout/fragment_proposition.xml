@@ -41,17 +41,18 @@
 
         <TextView
             android:id="@+id/propositionAbstractContent"
-            android:layout_width="362dp"
+            android:layout_width="260sp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="TextView"
+            android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/propositionAbstract" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/paragraphs"
-            android:layout_width="371dp"
+            android:layout_width="352dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="28dp"
@@ -59,6 +60,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/propositionAbstractContent"
-            tools:listitem="@layout/recycler_item_paragraph" />
+            tools:listitem="@layout/recycler_item_paragraph">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/nbSupports"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="0 soutien(s)"
+            android:textColor="#4CAF50"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/paragraphs" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
