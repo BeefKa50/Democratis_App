@@ -4,19 +4,21 @@ import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 import java.util.*
 
-@Entity(tableName = "proposition",foreignKeys = [
-    ForeignKey(entity = Account::class,
-        parentColumns = arrayOf("accountId"),
-        childColumns = arrayOf("authorId"),
-        onDelete = CASCADE),
-    ForeignKey(entity = Commission::class,
-        parentColumns = arrayOf("commissionId"),
-        childColumns = arrayOf("commissionId"),
-        onDelete = CASCADE),
-    ForeignKey(entity = GeneralAssembly::class,
-        parentColumns = arrayOf("assemblyId"),
-        childColumns = arrayOf("assemblyId"),
-        onDelete = CASCADE)])
+//@Entity(tableName = "proposition",foreignKeys = [
+//    ForeignKey(entity = Account::class,
+//        parentColumns = arrayOf("accountId"),
+//        childColumns = arrayOf("authorId"),
+//        onDelete = CASCADE),
+//    ForeignKey(entity = Commission::class,
+//        parentColumns = arrayOf("commissionId"),
+//        childColumns = arrayOf("commissionId"),
+//        onDelete = CASCADE),
+//    ForeignKey(entity = GeneralAssembly::class,
+//        parentColumns = arrayOf("assemblyId"),
+//        childColumns = arrayOf("assemblyId"),
+//        onDelete = CASCADE)])
+
+@Entity(tableName="proposition")
 data class Proposition (@PrimaryKey(autoGenerate = true) val propositionId: Long = 0,
                         @ColumnInfo(name = "picture") var picture:String?,
                         @ColumnInfo(name = "title") var title:String,
@@ -27,4 +29,5 @@ data class Proposition (@PrimaryKey(autoGenerate = true) val propositionId: Long
                         @ColumnInfo(name = "inFavorVotes") var inFavorVotes:Int,
                         @ColumnInfo(name = "againstVotes") var againstVotes:Int,
                         var commissionId:Int,
-                        var assemblyId:Int)
+                        var assemblyId:Int){
+}

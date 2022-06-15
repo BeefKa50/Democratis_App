@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         var profileId: Long? = null
     }
 
-    class ThreadPrepopulateCommissions(var context: Context): Thread() {
+    class ThreadPrepopulate(var context: Context): Thread() {
         public override fun run() {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
 
@@ -31,6 +31,12 @@ class MainActivity : AppCompatActivity() {
             db.commissionDao().insertSante()
             db.commissionDao().insertTravail()
             db.commissionDao().insertEgaliteHF()
+
+            db.propositionDao().insertPropositionEcocide()
+            db.propositionDao().insertPropositionForbidCorrida()
+
+            db.paragraphDao().insertAbstractCorrida()
+            db.paragraphDao().insertAbstractEcocide()
         }
     }
 
@@ -51,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        var th = ThreadPrepopulateCommissions(this)
+        var th = ThreadPrepopulate(this)
         th.start()
         th.join()
 
