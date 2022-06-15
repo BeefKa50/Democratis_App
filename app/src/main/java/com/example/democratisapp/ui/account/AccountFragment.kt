@@ -9,11 +9,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.democratis.classes.Account
+import com.example.democratis.classes.Commission
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.FragmentNotificationsBinding
+import com.example.democratisapp.ui.commissions.CommissionsFragment
 import com.example.democratisapp.ui.login.LoginActivity
+import com.example.kotlindeezer.ui.RecyclerCommissionAdapter
 
 class AccountFragment : Fragment() {
 
@@ -25,6 +29,7 @@ class AccountFragment : Fragment() {
 
     companion object{
         var account: Account? = null
+        lateinit var myCommissions:List<Commission>
     }
 
     class ThreadGetUser(var userId:Long,
@@ -33,6 +38,14 @@ class AccountFragment : Fragment() {
         public override fun run() {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
             account = db.accountDao().getUserById(userId)
+        }
+    }
+
+
+    class ThreadGetUserCommissions(var context: Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            myCommissions = MainActivity.profileId?.let { db.accountDao().getUserCommissions(it) }!!
         }
     }
 
@@ -47,7 +60,6 @@ class AccountFragment : Fragment() {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        System.out.println("ProfileId : -----> " + MainActivity.profileId)
         var th: ThreadGetUser? = null
         if(MainActivity.profileId != null) {
             th = ThreadGetUser(MainActivity.profileId!!,this.requireContext())
@@ -60,6 +72,12 @@ class AccountFragment : Fragment() {
         _binding!!.pseudo.setText(account?.username)
         _binding!!.emailInput.setText(account?.mail)
 
+        var th2 = ThreadGetUserCommissions(this.requireContext())
+        th2.start()
+        th2.join()
+
+        _binding!!.commissions.layoutManager = LinearLayoutManager(this.context)
+        _binding!!.commissions.adapter = CommissionsFragment.commissions?.let { RecyclerCommissionAdapter(it,this) }
         return root
     }
 

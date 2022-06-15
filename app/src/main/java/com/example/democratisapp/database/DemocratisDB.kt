@@ -14,7 +14,7 @@ import com.example.democratisapp.dao.CommissionDao
 
 @Database(entities = [Account::class, AccountAndCommission::class, AccountAndProposition::class,
     Amendment::class, Commission::class, GeneralAssembly::class,
-    Paragraph::class, Proposition::class], version = 6, exportSchema = true)
+    Paragraph::class, Proposition::class], version = 10, exportSchema = true)
 public abstract class DemocratisDB : RoomDatabase() {
 
     abstract fun accountDao(): AccountDao

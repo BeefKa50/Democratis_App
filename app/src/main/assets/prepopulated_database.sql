@@ -1,7 +1,0 @@
-INSERT INTO commission VALUES (1,NULL, "Ecologie","La commission Écologie a pour vocation d'émettre des propositions concernant la protection de l'environnement, la biodiversité, le réchauffement climatique ou encore le bien-être animal.");
-INSERT INTO commission VALUES (2,NULL, "Démocratie", "Ici sont débattues toutes les idées ayant trait à l'amélioration de la démocratie.");
-INSERT INTO commission VALUES (3,NULL, "Justice", "Les propositions débattues dans la commission Justice concernent l'ensemble de l'institution judiciaire, du processus d'interpellation à la prison.");
-INSERT INTO commission VALUES (4,NULL, "Travail", "Cette commission a pour but principal de proposer des idées en lien avec le monde du travail. Les thèmes concernés sont multiples : chômage, salaires, embauche ou encore droits sociaux.");
-INSERT INTO commission VALUES (5,NULL, "Économie", "Les propositions soumises dans la commission Économie sont relatives aux modèles économiques, à l'activité des entreprises, au commerce ou encore aux taxes et impôts");
-INSERT INTO commission VALUES (6,NULL, "Santé", "La commission Santé a pour objectif principal de cerner les enjeux relatifs à la santé publique et de proposer des améliorations ou des solutions, par exemple pour faire face à l'émergence d'une épidémie.");
-INSERT INTO commission VALUES (7,NULL, "Égalité Hommes-Femmes", "Cette commission cherche à débattre d'idées pouvant améliorer l'égalité entre les hommes et les femmes dans l'ensemble des domaines de la société.");

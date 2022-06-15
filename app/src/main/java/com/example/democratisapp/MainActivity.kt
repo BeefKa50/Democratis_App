@@ -27,10 +27,10 @@ class MainActivity : AppCompatActivity() {
             db.commissionDao().insertDemocratie()
             db.commissionDao().insertEcologie()
             db.commissionDao().insertEconomie()
-            db.commissionDao().insertEgaliteHF()
             db.commissionDao().insertJustice()
             db.commissionDao().insertSante()
             db.commissionDao().insertTravail()
+            db.commissionDao().insertEgaliteHF()
         }
     }
 

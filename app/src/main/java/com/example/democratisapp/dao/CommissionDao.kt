@@ -44,7 +44,7 @@ interface CommissionDao {
             "'La commission Santé a pour objectif principal de cerner les enjeux relatifs à la santé publique et de proposer des améliorations ou des solutions, par exemple pour faire face à l''émergence d''une épidémie.')")
     fun insertSante()
 
-    @Query("REPLACE INTO commission VALUES (7," +
+    @Query("REPLACE INTO commission VALUES (8," +
             "'https://cdn.pixabay.com/photo/2013/04/06/09/20/man-101001_1280.jpg', " +
             "'Égalité Hommes-Femmes', " +
             "'Cette commission cherche à débattre d''idées pouvant améliorer l''égalité entre les hommes et les femmes dans l''ensemble des domaines de la société.')")
@@ -53,5 +53,15 @@ interface CommissionDao {
     @Query("SELECT EXISTS (SELECT * FROM COMMISSION WHERE name = :name)")
     fun commissionExists(name:String) : Boolean
 
+    @Query("INSERT INTO accountAndCommission VALUES(null,:accountId,:commissionId)")
+    fun addMemberToCommission(accountId:Long, commissionId:Long)
 
+    @Query("SELECT EXISTS(SELECT * FROM accountAndCommission WHERE accountId = :accountId AND commissionId = :commissionId)")
+    fun isMemberOfCommission(accountId:Long, commissionId:Long) : Boolean
+
+    @Query("DELETE FROM accountAndCommission WHERE accountId = :accountId AND commissionId = :commissionId")
+    fun deleteMemberInCommission(accountId:Long, commissionId:Long)
+
+    @Query("SELECT COUNT(*) FROM accountAndCommission WHERE commissionId = :commissionId")
+    fun countCommissionMembers(commissionId: Long) : Long
 }
