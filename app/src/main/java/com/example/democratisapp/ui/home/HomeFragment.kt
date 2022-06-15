@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.democratis.classes.Proposition
+import com.example.democratisapp.MainActivity
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.FragmentHomeBinding
 import com.example.democratisapp.recycler_adapters.RecyclerPropositionAdapter

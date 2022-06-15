@@ -33,7 +33,14 @@
     <fragment
         android:id="@+id/propositionFragment"
         android:name="com.example.democratisapp.ui.proposition.PropositionFragment"
-        android:label="fragment_proposition"
-        tools:layout="@layout/fragment_proposition" />
+        android:label="Proposition"
+        tools:layout="@layout/fragment_proposition" >
+        <action
+            android:id="@+id/action_propositionFragment_to_accueil"
+            app:destination="@id/accueil" />
+        <action
+            android:id="@+id/action_propositionFragment_to_compte"
+            app:destination="@id/compte" />
+    </fragment>
 
 </navigation>

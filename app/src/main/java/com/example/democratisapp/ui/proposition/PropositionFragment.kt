@@ -2,20 +2,16 @@ package com.example.democratisapp.ui.proposition
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.democratis.classes.Paragraph
-import com.example.democratisapp.R
 import com.example.democratisapp.database.DemocratisDB
-import com.example.democratisapp.databinding.ActivityLoginBinding.inflate
-import com.example.democratisapp.databinding.FragmentAccountBinding
 import com.example.democratisapp.databinding.FragmentPropositionBinding
 import com.example.democratisapp.recycler_adapters.RecyclerParagraphAdapter
-import com.example.democratisapp.recycler_adapters.RecyclerPropositionAdapter
-import com.example.democratisapp.ui.home.HomeFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,6 +58,7 @@ class PropositionFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true);
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -91,5 +88,16 @@ class PropositionFragment : Fragment() {
         val root: View = binding.root
 
         return root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle presses on the action bar menu items
+        when (item.itemId) {
+            android.R.id.home -> {
+                activity?.onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
