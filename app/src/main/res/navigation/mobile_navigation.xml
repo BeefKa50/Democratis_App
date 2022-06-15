@@ -9,7 +9,11 @@
         android:id="@+id/accueil"
         android:name="com.example.democratisapp.ui.home.HomeFragment"
         android:label="Accueil"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_accueil_to_propositionFragment"
+            app:destination="@id/propositionFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/commissions"
@@ -21,6 +25,15 @@
         android:id="@+id/compte"
         android:name="com.example.democratisapp.ui.account.AccountFragment"
         android:label="Mon compte"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_compte_to_propositionFragment"
+            app:destination="@id/propositionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/propositionFragment"
+        android:name="com.example.democratisapp.ui.proposition.PropositionFragment"
+        android:label="fragment_proposition"
+        tools:layout="@layout/fragment_proposition" />
 
 </navigation>

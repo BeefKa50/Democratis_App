@@ -1,0 +1,95 @@
+package com.example.democratisapp.ui.proposition
+
+import android.content.Context
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.democratis.classes.Paragraph
+import com.example.democratisapp.R
+import com.example.democratisapp.database.DemocratisDB
+import com.example.democratisapp.databinding.ActivityLoginBinding.inflate
+import com.example.democratisapp.databinding.FragmentAccountBinding
+import com.example.democratisapp.databinding.FragmentPropositionBinding
+import com.example.democratisapp.recycler_adapters.RecyclerParagraphAdapter
+import com.example.democratisapp.recycler_adapters.RecyclerPropositionAdapter
+import com.example.democratisapp.ui.home.HomeFragment
+
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [PropositionFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class PropositionFragment : Fragment() {
+    private var param1: String? = null
+    private var param2: String? = null
+
+    companion object {
+
+        lateinit var paragraphs:List<Paragraph>
+
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            PropositionFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+
+    class ThreadGetPropositionParagraphs(var propositionId:Long, var context: Context): Thread() {
+        public override fun run() {
+            System.out.println("Début du thread de récupération des paragraphes...")
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            paragraphs = db.paragraphDao().getPropositionParagraphs(propositionId)
+        }
+    }
+
+    private var _binding: FragmentPropositionBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+
+        _binding = FragmentPropositionBinding.inflate(inflater, container, false)
+        val id:String? = arguments?.getString("id")
+
+        var th = id?.let { ThreadGetPropositionParagraphs(it.toLong(),this.requireContext()) }
+        if (th != null) {
+            th.start()
+        }
+        th?.join()
+
+        _binding!!.propositionAbstractContent.setText(paragraphs.get(0).content)
+        _binding!!.paragraphs.layoutManager = LinearLayoutManager(this.context)
+        _binding!!.paragraphs.adapter = RecyclerParagraphAdapter(paragraphs.subList(1,paragraphs.size),this)
+
+        val root: View = binding.root
+
+        return root
+    }
+}

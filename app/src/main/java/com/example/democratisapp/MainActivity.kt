@@ -37,6 +37,10 @@ class MainActivity : AppCompatActivity() {
 
             db.paragraphDao().insertAbstractCorrida()
             db.paragraphDao().insertAbstractEcocide()
+
+            db.paragraphDao().insertFirstParagraphEcocide()
+            db.paragraphDao().insertSecondParagraphEcocide()
+            db.paragraphDao().insertFirstParagraphCorrida()
         }
     }
 

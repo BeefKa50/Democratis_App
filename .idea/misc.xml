@@ -15,11 +15,13 @@
         <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/fragment_blank.xml" value="0.27760416666666665" />
         <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/fragment_dashboard.xml" value="0.22" />
-        <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/fragment_login.xml" value="0.34193840579710144" />
         <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/fragment_notifications.xml" value="0.2823741007194245" />
+        <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/fragment_proposition.xml" value="0.33" />
         <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/fragment_register.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/recycler_item_commissions.xml" value="0.33" />
+        <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/recycler_item_paragraph.xml" value="0.35688405797101447" />
         <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/recycler_item_propositions.xml" value="0.25" />
         <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/layout/recycler_propositions_item.xml" value="0.5" />
         <entry key="..\:/Users/dylan/AndroidStudioProjects/DemocratisApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />

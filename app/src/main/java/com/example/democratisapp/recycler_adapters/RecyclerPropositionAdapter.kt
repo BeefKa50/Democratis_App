@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.democratis.classes.Commission
@@ -64,11 +66,10 @@ class RecyclerPropositionAdapter(private val data: List<Proposition>, val parent
         var paragraph:Paragraph = paragraphs.get(0)
         holder.binding.propositionDescription.setText(paragraph.content)
 
-//        holder.binding.card.setOnClickListener{
-//            val args = bundleOf("album" to album.title, "id" to album.id.toString())
-//            val navController = parentFragment.findNavController()
-//            navController.navigate(R.id.action_AlbumFragment_to_TrackFragment, args)
-//        }
-
+        holder.binding.card.setOnClickListener{
+            val args = bundleOf("id" to proposition.propositionId.toString())
+            val navController = parentFragment.findNavController()
+            navController.navigate(R.id.action_accueil_to_propositionFragment, args)
+        }
     }
 }
