@@ -17,7 +17,7 @@ import java.util.*
         parentColumns = arrayOf("assemblyId"),
         childColumns = arrayOf("assemblyId"),
         onDelete = CASCADE)])
-data class Proposition (@PrimaryKey(autoGenerate = true) val propositionId: Long,
+data class Proposition (@PrimaryKey(autoGenerate = true) val propositionId: Long = 0,
                         @ColumnInfo(name = "picture") var picture:String?,
                         @ColumnInfo(name = "title") var title:String,
                         @ColumnInfo(name = "submitDate") var submitDate:String,

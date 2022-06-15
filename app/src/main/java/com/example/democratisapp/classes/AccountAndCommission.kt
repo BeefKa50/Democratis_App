@@ -15,6 +15,6 @@ import com.example.democratis.classes.Commission
         parentColumns = arrayOf("commissionId"),
         childColumns = arrayOf("commissionId"),
         onDelete = ForeignKey.CASCADE)])
-data class AccountAndCommission(@PrimaryKey(autoGenerate = true) val id:Long,
+data class AccountAndCommission(@PrimaryKey(autoGenerate = true) val id:Long = 0,
                                 var accountId:Long,
                                 var commissionId:Long)

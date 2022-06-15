@@ -8,8 +8,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commissions"
-        android:layout_width="394dp"
-        android:layout_height="639dp"
+        android:layout_width="381dp"
+        android:layout_height="616dp"
         android:layout_marginTop="55dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

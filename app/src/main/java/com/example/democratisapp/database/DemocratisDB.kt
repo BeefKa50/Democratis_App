@@ -9,16 +9,18 @@ import androidx.room.migration.Migration
 import com.example.democratis.classes.*
 import com.example.democratisapp.classes.AccountAndCommission
 import com.example.democratisapp.classes.AccountAndProposition
+import com.example.democratisapp.dao.AccountAndCommissionDao
 import com.example.democratisapp.dao.AccountDao
 import com.example.democratisapp.dao.CommissionDao
 
 @Database(entities = [Account::class, AccountAndCommission::class, AccountAndProposition::class,
     Amendment::class, Commission::class, GeneralAssembly::class,
-    Paragraph::class, Proposition::class], version = 10, exportSchema = true)
+    Paragraph::class, Proposition::class], version = 12, exportSchema = true)
 public abstract class DemocratisDB : RoomDatabase() {
 
     abstract fun accountDao(): AccountDao
     abstract fun commissionDao(): CommissionDao
+    abstract fun accountAndCommissionDao(): AccountAndCommissionDao
 
     companion object {
         @Volatile

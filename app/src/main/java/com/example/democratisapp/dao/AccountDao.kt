@@ -10,7 +10,7 @@ import com.example.democratis.classes.Proposition
 
 @Dao
 interface AccountDao{
-    @Query("SELECT * FROM  commission WHERE commissionId = (SELECT commissionId FROM accountAndCommission WHERE accountId = :accountId)")
+    @Query("SELECT * FROM  commission WHERE commissionId in (SELECT commissionId FROM accountAndCommission WHERE accountId = :accountId)")
     fun getUserCommissions(accountId: Long): List<Commission>
 
     @Query("SELECT * FROM  proposition JOIN accountAndProposition ON proposition.propositionId" +

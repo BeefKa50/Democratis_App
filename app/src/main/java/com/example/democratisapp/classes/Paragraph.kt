@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
         parentColumns = arrayOf("propositionId"),
         childColumns = arrayOf("propositionId"),
         onDelete = ForeignKey.CASCADE)])
-data class Paragraph(@PrimaryKey(autoGenerate = true) val paragraphId:Long,
+data class Paragraph(@PrimaryKey(autoGenerate = true) val paragraphId:Long = 0,
                      @ColumnInfo(name = "num") var num:Int,
                      @ColumnInfo(name = "content") var content:String,
                      var propositionId:String)

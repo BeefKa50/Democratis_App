@@ -14,15 +14,18 @@ import com.bumptech.glide.Glide
 import com.example.democratis.classes.Commission
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.R
+import com.example.democratisapp.classes.AccountAndCommission
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.RecyclerItemCommissionsBinding
 import com.example.democratisapp.ui.commissions.CommissionsFragment
+import java.util.concurrent.ConcurrentHashMap
 
 
 class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFragment: Fragment) : RecyclerView.Adapter<RecyclerCommissionAdapter.CommissionViewHolder>(){
     companion object {
         private const val TAG = "CommissionViewAdapter"
         var isMemberOfCommission:HashMap<Long,Boolean> = HashMap<Long,Boolean>()
+        var membersTextViews: ConcurrentHashMap<Long, TextView> = ConcurrentHashMap<Long,TextView>()
     }
 
     inner class CommissionViewHolder(val binding: RecyclerItemCommissionsBinding) :
@@ -38,7 +41,7 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
             th?.join()
             if(isMemberOfCommission.get(commissionId) == false) {
                 var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-                db.commissionDao().addMemberToCommission(accountId, commissionId)
+                db.accountAndCommissionDao().addNewMemberToCommission(AccountAndCommission(accountId=accountId, commissionId = commissionId))
             }
         }
     }
@@ -68,24 +71,20 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
         }
     }
 
-    class ThreadUpdateCommissionMembers(var commissionMembers:TextView,
-                                         var commissionId:Long,
-                                         var context: Context): Thread() {
-        private fun runOnUiThread(task:Runnable){
+    class ThreadUpdateCommissionMembers(var commissionId:Long,
+                                        var context: Context): Thread() {
+        @Synchronized private fun runOnUiThread(task:Runnable){
             Handler(Looper.getMainLooper()).post(task)
         }
 
         public override fun run() {
-            while(true) {
-                var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
 
-                var nbMembers: Long = db.commissionDao().countCommissionMembers(commissionId)
+            var nbMembers: Long = db.commissionDao().countCommissionMembers(commissionId)
 
-                runOnUiThread(Runnable {
-                    commissionMembers.setText(nbMembers.toString() + " membre(s)")
-                })
-                sleep(1000)
-            }
+            runOnUiThread(Runnable {
+                membersTextViews.get(commissionId)?.setText(nbMembers.toString() + " membre(s)")
+            })
         }
     }
 
@@ -98,7 +97,6 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return CommissionViewHolder(binding)
     }
-
 
     override fun onBindViewHolder(holder: RecyclerCommissionAdapter.CommissionViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder position=${position}")
@@ -118,9 +116,11 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
             Log.e(TAG, "Glide", e)
         }
 
-        var thUpdate = ThreadUpdateCommissionMembers(holder.binding.commissionMembers,
-            commission.commissionId,parentFragment.requireContext())
-        thUpdate.start()
+        membersTextViews.put(commission.commissionId,holder.binding.commissionMembers)
+
+       var thUpdate = ThreadUpdateCommissionMembers(commission.commissionId,parentFragment.requireContext())
+       thUpdate.start()
+       thUpdate.join()
 
         holder.binding.commissionName.text = commission.name
         holder.binding.commissionDescription.text = commission.desc
@@ -170,6 +170,10 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
                 holder.binding.joinCommission.setText("Rejoindre")
                 holder.binding.joinCommission.setBackgroundColor(ContextCompat.getColor(parentFragment.requireContext(), R.color.purple_500))
             }
+
+            var thUpdate = ThreadUpdateCommissionMembers(commission.commissionId,parentFragment.requireContext())
+            thUpdate.start()
+            thUpdate.join()
         }
 
 //        holder.binding.card.setOnClickListener{

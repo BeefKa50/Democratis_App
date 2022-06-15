@@ -46,6 +46,7 @@ class AccountFragment : Fragment() {
         public override fun run() {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
             myCommissions = MainActivity.profileId?.let { db.accountDao().getUserCommissions(it) }!!
+            for(commission in myCommissions) System.out.println("Commission " + commission.name)
         }
     }
 
@@ -77,7 +78,7 @@ class AccountFragment : Fragment() {
         th2.join()
 
         _binding!!.commissions.layoutManager = LinearLayoutManager(this.context)
-        _binding!!.commissions.adapter = CommissionsFragment.commissions?.let { RecyclerCommissionAdapter(it,this) }
+        _binding!!.commissions.adapter = AccountFragment.myCommissions?.let { RecyclerCommissionAdapter(it,this) }
         return root
     }
 

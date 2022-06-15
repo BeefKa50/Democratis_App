@@ -52,9 +52,9 @@ interface CommissionDao {
 
     @Query("SELECT EXISTS (SELECT * FROM COMMISSION WHERE name = :name)")
     fun commissionExists(name:String) : Boolean
-
-    @Query("INSERT INTO accountAndCommission VALUES(null,:accountId,:commissionId)")
-    fun addMemberToCommission(accountId:Long, commissionId:Long)
+//
+//    @Query("INSERT INTO accountAndCommission VALUES(null,:accountId,:commissionId)")
+//    fun addMemberToCommission(accountId:Long, commissionId:Long)
 
     @Query("SELECT EXISTS(SELECT * FROM accountAndCommission WHERE accountId = :accountId AND commissionId = :commissionId)")
     fun isMemberOfCommission(accountId:Long, commissionId:Long) : Boolean
