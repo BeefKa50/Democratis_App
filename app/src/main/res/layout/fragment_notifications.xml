@@ -95,7 +95,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/commissions"
-            android:layout_width="match_parent"
+            android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:nestedScrollingEnabled="false"
@@ -109,7 +109,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/propositions"
-            android:layout_width="match_parent"
+            android:layout_width="402dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:scrollY="1dp"
