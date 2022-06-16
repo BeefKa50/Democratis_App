@@ -9,11 +9,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.example.democratis.classes.Account
 import com.example.democratis.classes.Paragraph
 import com.example.democratis.classes.Proposition
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.MainActivity.Companion.profileId
 import com.example.democratisapp.R
+import com.example.democratisapp.classes.AccountAndProposition
 import com.example.democratisapp.databinding.FragmentAddPropositionBinding
 import com.example.democratisapp.databinding.FragmentPropositionBinding
 import com.example.democratisapp.threads.UsefulThreads
@@ -71,6 +73,15 @@ class AddPropositionFragment : Fragment() {
                     UsefulThreads.ThreadInsertNewProposition(newProposition, this.requireContext())
                 thAddProp.start()
                 thAddProp.join()
+
+                var accountAndProposition:AccountAndProposition = AccountAndProposition(
+                    accountId= MainActivity.profileId!!, propositionId = newPropId)
+
+                var thAddLink =
+                    UsefulThreads.ThreadInsertPropositionAccountLink(accountAndProposition,
+                        this.requireContext())
+                thAddLink.start()
+                thAddLink.join()
 
                 var abstract: Paragraph = Paragraph(
                     num = 0,

@@ -12,9 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.democratis.classes.Account
 import com.example.democratis.classes.Commission
+import com.example.democratis.classes.Proposition
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.FragmentAccountBinding
+import com.example.democratisapp.recycler_adapters.RecyclerPropositionAdapter
 import com.example.democratisapp.threads.UsefulThreads
 import com.example.democratisapp.ui.commissions.CommissionsFragment
 import com.example.democratisapp.ui.login.LoginActivity
@@ -31,6 +33,7 @@ class AccountFragment : Fragment() {
     companion object{
         var account: Account? = null
         lateinit var myCommissions:List<Commission>
+        lateinit var myPropositions:List<Proposition>
     }
 
     override fun onCreateView(
@@ -61,7 +64,15 @@ class AccountFragment : Fragment() {
         th2.join()
 
         _binding!!.commissions.layoutManager = LinearLayoutManager(this.context)
-        _binding!!.commissions.adapter = AccountFragment.myCommissions?.let { RecyclerCommissionAdapter(it,this) }
+        _binding!!.commissions.adapter = myCommissions?.let { RecyclerCommissionAdapter(it,this) }
+
+        var th3 = UsefulThreads.ThreadGetUserPropositions(this.requireContext())
+        th3.start()
+        th3.join()
+
+        _binding!!.propositions.layoutManager = LinearLayoutManager(this.context)
+        _binding!!.propositions.adapter = myPropositions?.let { RecyclerPropositionAdapter(it,this) }
+
         return root
     }
 

@@ -8,6 +8,7 @@ import com.example.democratis.classes.Paragraph
 import com.example.democratis.classes.Proposition
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.classes.AccountAndCommission
+import com.example.democratisapp.classes.AccountAndProposition
 import com.example.democratisapp.classes.PropositionSupports
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.recycler_adapters.RecyclerCommissionPropositionsAdapter
@@ -150,7 +151,13 @@ class UsefulThreads {
         public override fun run() {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
             AccountFragment.myCommissions = MainActivity.profileId?.let { db.accountDao().getUserCommissions(it) }!!
-            for(commission in AccountFragment.myCommissions) System.out.println("Commission " + commission.name)
+        }
+    }
+
+    class ThreadGetUserPropositions(var context: Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            AccountFragment.myPropositions = MainActivity.profileId?.let { db.accountDao().getUserPropositions(it) }!!
         }
     }
 
@@ -238,6 +245,13 @@ class UsefulThreads {
         public override fun run() {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
             db.propositionDao().decrementNbSupports(propositionId)
+        }
+    }
+
+    class ThreadInsertPropositionAccountLink(var accountAndProposition: AccountAndProposition, var context: Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            db.accountAndPropositionDao().insertNewPropositionAccountLink(accountAndProposition)
         }
     }
 }

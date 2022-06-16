@@ -13,8 +13,7 @@ interface AccountDao{
     @Query("SELECT * FROM  commission WHERE commissionId in (SELECT commissionId FROM accountAndCommission WHERE accountId = :accountId)")
     fun getUserCommissions(accountId: Long): List<Commission>
 
-    @Query("SELECT * FROM  proposition JOIN accountAndProposition ON proposition.propositionId" +
-            "= accountAndProposition.propositionId WHERE accountId = :accountId")
+    @Query("SELECT * FROM  proposition WHERE propositionId in (SELECT propositionId FROM accountAndProposition WHERE accountId = :accountId)")
     fun getUserPropositions(accountId: Long): List<Proposition>
 
     @Query("SELECT EXISTS(SELECT * FROM account WHERE username = :login AND " +

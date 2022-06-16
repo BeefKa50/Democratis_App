@@ -23,6 +23,7 @@ public abstract class DemocratisDB : RoomDatabase() {
     abstract fun propositionDao():PropositionDao
     abstract fun paragraphDao():ParagraphDao
     abstract fun propositionSupportsDao():PropositionSupportsDao
+    abstract fun accountAndPropositionDao():AccountAndPropositionDao
 
     companion object {
         @Volatile
