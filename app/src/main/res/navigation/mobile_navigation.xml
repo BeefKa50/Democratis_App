@@ -19,7 +19,11 @@
         android:id="@+id/commissions"
         android:name="com.example.democratisapp.ui.commissions.CommissionsFragment"
         android:label="Commissions"
-        tools:layout="@layout/fragment_commissions" />
+        tools:layout="@layout/fragment_commissions" >
+        <action
+            android:id="@+id/action_commissions_to_commissionPropositionsFragment"
+            app:destination="@id/commissionPropositionsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/compte"
@@ -41,6 +45,14 @@
         <action
             android:id="@+id/action_propositionFragment_to_compte"
             app:destination="@id/compte" />
+    </fragment>
+    <fragment
+        android:id="@+id/commissionPropositionsFragment"
+        android:name="com.example.democratisapp.ui.commission_propositions.CommissionPropositionsFragment"
+        android:label="Commission" >
+        <action
+            android:id="@+id/action_commissionPropositionsFragment_to_commissions"
+            app:destination="@id/commissions" />
     </fragment>
 
 </navigation>

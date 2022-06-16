@@ -7,8 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.democratis.classes.Commission
@@ -176,11 +179,21 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
             thUpdate.join()
         }
 
-//        holder.binding.card.setOnClickListener{
-//            val args = bundleOf("album" to album.title, "id" to album.id.toString())
-//            val navController = parentFragment.findNavController()
-//            navController.navigate(R.id.action_AlbumFragment_to_TrackFragment, args)
-//        }
+        holder.binding.card.setOnClickListener{
+            var th =
+                MainActivity.profileId?.let { it1 -> ThreadIsMemberOfCommission(it1,commission.commissionId, parentFragment.requireContext()) }
+            th?.start()
+            th?.join()
+
+            if(isMemberOfCommission.get(commission.commissionId) == true){
+                val args = bundleOf("id" to commission.commissionId.toString())
+                val navController = parentFragment.findNavController()
+                navController.navigate(R.id.action_commissions_to_commissionPropositionsFragment, args)
+            }
+            else{
+                Toast.makeText(parentFragment.requireContext(), "Vous devez d'abord rejoindre la commission.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     }
 }

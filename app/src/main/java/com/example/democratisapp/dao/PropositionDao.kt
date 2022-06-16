@@ -37,4 +37,7 @@ interface PropositionDao {
 
     @Query("SELECT * FROM proposition WHERE propositionId = :propositionId")
     fun getPropositionById(propositionId:Long):Proposition
+
+    @Query("SELECT * FROM proposition WHERE commissionId = :commissionId")
+    fun getCommissionPropositions(commissionId:Long) : List<Proposition>
 }
