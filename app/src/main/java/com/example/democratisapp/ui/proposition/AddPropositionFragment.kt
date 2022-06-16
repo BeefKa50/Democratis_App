@@ -1,5 +1,6 @@
 package com.example.democratisapp.ui.proposition
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -131,11 +132,16 @@ class AddPropositionFragment : Fragment() {
                     thAddParagraph.join()
                 }
 
-                val args = bundleOf("id" to id.toString())
-                val navController = this.findNavController()
-                navController.navigate(R.id.action_addPropositionFragment_to_commissionPropositionsFragment, args)
+//                val args = bundleOf("id" to id.toString())
+//                val navController = this.findNavController()
+//                navController.navigate(R.id.action_addPropositionFragment_to_commissionPropositionsFragment, args)
 
-                getParentFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
+                Toast.makeText(this.requireContext(),
+                    "Votre proposition a bien été soumise !",
+                    Toast.LENGTH_LONG).show()
+
+                val intent = Intent(getActivity(), MainActivity::class.java)
+                getActivity()?.startActivity(intent)
             }
             else{
                 Toast.makeText(this.requireContext(),

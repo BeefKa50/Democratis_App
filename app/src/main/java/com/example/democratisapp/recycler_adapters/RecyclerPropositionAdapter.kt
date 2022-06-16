@@ -28,7 +28,7 @@ import com.example.democratisapp.threads.UsefulThreads
 import com.example.democratisapp.ui.commissions.CommissionsFragment
 import java.util.concurrent.ConcurrentHashMap
 
-class RecyclerPropositionAdapter(private val data: List<Proposition>, val parentFragment: Fragment) : RecyclerView.Adapter<RecyclerPropositionAdapter.PropositionViewHolder>(){
+class RecyclerPropositionAdapter(private val data: List<Proposition>, val parentFragment: Fragment, val from:String) : RecyclerView.Adapter<RecyclerPropositionAdapter.PropositionViewHolder>(){
     companion object {
         private const val TAG = "PropositionViewHolder"
         lateinit var paragraphs:List<Paragraph>
@@ -77,7 +77,12 @@ class RecyclerPropositionAdapter(private val data: List<Proposition>, val parent
         holder.binding.card.setOnClickListener{
             val args = bundleOf("id" to proposition.propositionId.toString())
             val navController = parentFragment.findNavController()
-            navController.navigate(R.id.action_compte_to_propositionFragment, args)
+            if(from.equals("home")) {
+                navController.navigate(R.id.action_accueil_to_propositionFragment, args)
+            }
+            else if(from.equals("account")){
+                navController.navigate(R.id.action_compte_to_propositionFragment, args)
+            }
         }
     }
 }

@@ -71,7 +71,7 @@ class AccountFragment : Fragment() {
         th3.join()
 
         _binding!!.propositions.layoutManager = LinearLayoutManager(this.context)
-        _binding!!.propositions.adapter = myPropositions?.let { RecyclerPropositionAdapter(it,this) }
+        _binding!!.propositions.adapter = myPropositions?.let { RecyclerPropositionAdapter(it,this,"account") }
 
         return root
     }

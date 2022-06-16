@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
         th.join()
 
         _binding!!.propositions.layoutManager = LinearLayoutManager(this.context)
-        _binding!!.propositions.adapter = RecyclerPropositionAdapter(propositions,this)
+        _binding!!.propositions.adapter = RecyclerPropositionAdapter(propositions,this,"home")
 
         return root
     }
