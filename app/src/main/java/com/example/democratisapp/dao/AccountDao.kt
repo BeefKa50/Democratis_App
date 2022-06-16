@@ -34,4 +34,7 @@ interface AccountDao{
 
     @Query("SELECT * FROM account")
     fun getAllAccounts() : List<Account>
+
+    @Query("UPDATE account SET mail = :mail WHERE accountId = :accountId")
+    fun changeMail(accountId:Long, mail:String)
 }

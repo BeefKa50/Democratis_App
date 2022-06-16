@@ -254,4 +254,11 @@ class UsefulThreads {
             db.accountAndPropositionDao().insertNewPropositionAccountLink(accountAndProposition)
         }
     }
+
+    class ThreadUpdateMail(var accountId:Long, var mail:String, var context: Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            db.accountDao().changeMail(accountId,mail)
+        }
+    }
 }

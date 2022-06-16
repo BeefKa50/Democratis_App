@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -72,6 +73,23 @@ class AccountFragment : Fragment() {
 
         _binding!!.propositions.layoutManager = LinearLayoutManager(this.context)
         _binding!!.propositions.adapter = myPropositions?.let { RecyclerPropositionAdapter(it,this,"account") }
+
+        _binding!!.buttonSaveChanges.setOnClickListener{
+            if(_binding!!.emailInput.text.toString() != account?.mail.toString()){
+                var thUpdateMail = MainActivity.profileId?.let { it1 ->
+                    account?.let { it2 ->
+                        UsefulThreads.ThreadUpdateMail(
+                            it1, it2.mail,this.requireContext())
+                    }
+                }
+                thUpdateMail?.start()
+                thUpdateMail?.join()
+
+                Toast.makeText(this.requireContext(),
+                    "Vos informations ont bien été mises à jour !",
+                    Toast.LENGTH_LONG).show()
+            }
+        }
 
         return root
     }
