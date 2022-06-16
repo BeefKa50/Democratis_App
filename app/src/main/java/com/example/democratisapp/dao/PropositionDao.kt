@@ -1,6 +1,7 @@
 package com.example.democratisapp.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.example.democratis.classes.Proposition
 
@@ -32,12 +33,21 @@ interface PropositionDao {
             "0)")
     fun insertPropositionEcocide()
 
-    @Query("SELECT * FROM Proposition")
+    @Query("SELECT * FROM Proposition ORDER BY nbSupports DESC")
     fun getAllPropositions() : List<Proposition>
+
+    @Query("UPDATE proposition SET nbSupports = nbSupports+1 WHERE propositionId = :propositionId")
+    fun incrementNbSupports(propositionId:Long)
+
+    @Query("UPDATE proposition SET nbSupports = nbSupports-1 WHERE propositionId = :propositionId")
+    fun decrementNbSupports(propositionId:Long)
 
     @Query("SELECT * FROM proposition WHERE propositionId = :propositionId")
     fun getPropositionById(propositionId:Long):Proposition
 
     @Query("SELECT * FROM proposition WHERE commissionId = :commissionId")
     fun getCommissionPropositions(commissionId:Long) : List<Proposition>
+
+    @Insert
+    fun insertNewProposition(proposition:Proposition) : Long
 }

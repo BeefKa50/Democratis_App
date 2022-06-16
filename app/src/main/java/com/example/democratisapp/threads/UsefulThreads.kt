@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import com.example.democratis.classes.Account
+import com.example.democratis.classes.Paragraph
+import com.example.democratis.classes.Proposition
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.classes.AccountAndCommission
 import com.example.democratisapp.classes.PropositionSupports
@@ -16,6 +18,7 @@ import com.example.democratisapp.ui.commission_propositions.CommissionPropositio
 import com.example.democratisapp.ui.commissions.CommissionsFragment
 import com.example.democratisapp.ui.home.HomeFragment
 import com.example.democratisapp.ui.login.LoginActivity
+import com.example.democratisapp.ui.proposition.AddPropositionFragment.Companion.newPropId
 import com.example.kotlindeezer.ui.RecyclerCommissionAdapter
 
 class UsefulThreads {
@@ -207,6 +210,34 @@ class UsefulThreads {
         public override fun run() {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
             nbSupportsHome = db.propositionSupportsDao().countSupports(propositionId)
+        }
+    }
+
+    class ThreadInsertNewProposition(var proposition:Proposition, var context: Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            newPropId = db.propositionDao().insertNewProposition(proposition)
+        }
+    }
+
+    class ThreadInsertNewParagraph(var paragraph: Paragraph, var context: Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            db.paragraphDao().insertNewParagraph(paragraph)
+        }
+    }
+
+    class ThreadIncrementNbSupports(var propositionId:Long, var context: Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            db.propositionDao().incrementNbSupports(propositionId)
+        }
+    }
+
+    class ThreadDecrementNbSupports(var propositionId:Long, var context: Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            db.propositionDao().decrementNbSupports(propositionId)
         }
     }
 }

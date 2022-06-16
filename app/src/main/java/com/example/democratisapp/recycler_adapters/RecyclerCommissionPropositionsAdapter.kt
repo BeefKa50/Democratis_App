@@ -98,6 +98,10 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
                 th2?.start()
                 th2?.join()
 
+                var thIncrement = UsefulThreads.ThreadIncrementNbSupports(propositionId,parentFragment.requireContext())
+                thIncrement.start()
+                thIncrement.join()
+
                 holder.binding.buttonSupport.setText("Ne plus soutenir")
                 holder.binding.buttonSupport.setBackgroundColor(ContextCompat.getColor(parentFragment.requireContext(), R.color.red))
             }
@@ -108,6 +112,10 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
                 )
                 th2?.start()
                 th2?.join()
+
+                var thDecrement = UsefulThreads.ThreadDecrementNbSupports(propositionId,parentFragment.requireContext())
+                thDecrement.start()
+                thDecrement.join()
 
                 holder.binding.buttonSupport.setText("Soutenir")
                 holder.binding.buttonSupport.setBackgroundColor(ContextCompat.getColor(parentFragment.requireContext(), R.color.purple_500))

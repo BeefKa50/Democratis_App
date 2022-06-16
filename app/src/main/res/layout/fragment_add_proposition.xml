@@ -63,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/paragraph1Content3" />
+            app:layout_constraintTop_toBottomOf="@+id/abstractContent" />
 
         <TextView
             android:id="@+id/propositionParagraph"
@@ -103,7 +103,7 @@
             app:layout_constraintTop_toBottomOf="@+id/propositionParagraph1" />
 
         <EditText
-            android:id="@+id/paragraph1Content3"
+            android:id="@+id/abstractContent"
             android:layout_width="260sp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"

@@ -1,6 +1,7 @@
 package com.example.democratisapp.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.example.democratis.classes.Paragraph
 
@@ -38,5 +39,8 @@ interface ParagraphDao{
 
     @Query("SELECT * FROM paragraph WHERE propositionId = :propositionId")
     fun getPropositionParagraphs(propositionId:Long) : List<Paragraph>
+
+    @Insert
+    fun insertNewParagraph(paragraph:Paragraph)
 
 }

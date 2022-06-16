@@ -165,7 +165,8 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
                 navController.navigate(R.id.action_commissions_to_commissionPropositionsFragment, args)
             }
             else{
-                Toast.makeText(parentFragment.requireContext(), "Vous devez d'abord rejoindre la commission.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(parentFragment.requireContext(),
+                    "Vous devez d'abord rejoindre la commission.", Toast.LENGTH_SHORT).show()
             }
         }
 
