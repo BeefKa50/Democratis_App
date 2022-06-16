@@ -19,8 +19,6 @@ import com.example.democratisapp.R
 import com.example.democratisapp.classes.PropositionSupports
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.RecyclerItemCommissionPropositionsBinding
-import com.example.democratisapp.databinding.RecyclerItemPropositionsBinding
-import com.example.kotlindeezer.ui.RecyclerCommissionAdapter
 import java.util.concurrent.ConcurrentHashMap
 
 class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>, val parentFragment: Fragment) : RecyclerView.Adapter<RecyclerCommissionPropositionsAdapter.CommissionPropositionsViewHolder>(){
@@ -74,6 +72,7 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
 
             var nbMembers: Long = db.propositionSupportsDao().countSupports(propositionId)
             System.out.println("Nb soutiens : " + nbMembers)
+            System.out.println("Texte actuel : " + supportViews.get(propositionId)?.text)
 
             runOnUiThread(Runnable {
                 supportViews.get(propositionId)?.setText(nbMembers.toString() + " soutien(s)")
@@ -96,7 +95,7 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
 
         val proposition: Proposition = data[position]
 
-        supportViews.putIfAbsent(proposition.propositionId,holder.binding.propositionSupports)
+        supportViews.put(proposition.propositionId,holder.binding.propositionSupports)
 
         holder.binding.propositionName.setText(proposition.title)
         holder.binding.propositionSupports.setText(proposition.nbSupports.toString() + " soutien(s)")
@@ -111,12 +110,6 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
         var thUpdate = ThreadUpdateSupports(proposition.propositionId,parentFragment.requireContext())
         thUpdate.start()
         thUpdate.join()
-
-//        holder.binding.card.setOnClickListener{
-//            val args = bundleOf("id" to proposition.propositionId.toString())
-//            val navController = parentFragment.findNavController()
-//            navController.navigate(R.id.action_accueil_to_propositionFragment, args)
-//        }
 
         var propositionId:Long = proposition.propositionId
 
@@ -159,6 +152,12 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
             var thUpdate = ThreadUpdateSupports(propositionId,parentFragment.requireContext())
             thUpdate.start()
             thUpdate.join()
+        }
+
+        holder.binding.card.setOnClickListener{
+            val args = bundleOf("id" to proposition.propositionId.toString())
+            val navController = parentFragment.findNavController()
+            navController.navigate(R.id.action_commissionPropositionsFragment_to_propositionFragment, args)
         }
     }
 }

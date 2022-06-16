@@ -80,7 +80,7 @@
                 <Button
                     android:id="@+id/buttonSupport"
                     android:layout_width="wrap_content"
-                    android:layout_height="37dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="20dp"
                     android:text="Soutenir"
                     android:textSize="13sp"

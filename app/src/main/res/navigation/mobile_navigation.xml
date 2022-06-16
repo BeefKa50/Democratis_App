@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_propositionFragment_to_compte"
             app:destination="@id/compte" />
+        <action
+            android:id="@+id/action_propositionFragment_to_commissionPropositionsFragment"
+            app:destination="@id/commissionPropositionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/commissionPropositionsFragment"
@@ -53,6 +56,9 @@
         <action
             android:id="@+id/action_commissionPropositionsFragment_to_commissions"
             app:destination="@id/commissions" />
+        <action
+            android:id="@+id/action_commissionPropositionsFragment_to_propositionFragment"
+            app:destination="@id/propositionFragment" />
     </fragment>
 
 </navigation>

@@ -32,19 +32,9 @@ class PropositionFragment : Fragment() {
     private var param2: String? = null
 
     companion object {
-
         lateinit var paragraphs:List<Paragraph>
         lateinit var proposition: Proposition
-
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PropositionFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        var nbSupports:Long = 0
     }
 
     class ThreadPropositionById(var propositionId:Long,
@@ -52,6 +42,14 @@ class PropositionFragment : Fragment() {
         public override fun run() {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
             proposition = db.propositionDao().getPropositionById(propositionId)
+        }
+    }
+
+    class ThreadCountSupports(var propositionId:Long,
+                                var context: Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            nbSupports = db.propositionSupportsDao().countSupports(propositionId)
         }
     }
 
@@ -101,10 +99,21 @@ class PropositionFragment : Fragment() {
         _binding!!.paragraphs.layoutManager = LinearLayoutManager(this.context)
         _binding!!.paragraphs.adapter = RecyclerParagraphAdapter(paragraphs.subList(1,paragraphs.size),this)
 
-        var th2 = id?.let { ThreadPropositionById(it.toLong(),this.requireContext()) }
+        var th2 = id?.let { parentFragment?.let { it1 ->
+            ThreadPropositionById(propositionId = it.toLong(),
+                it1.requireContext())
+        }}
         th2?.start()
         th2?.join()
-        _binding!!.nbSupports.setText(proposition.nbSupports.toString() + " soutien(s)")
+
+        var th3 = parentFragment?.let {
+            ThreadCountSupports(proposition.propositionId,
+                it.requireContext())
+        }
+        th3?.start()
+        th3?.join()
+
+        _binding!!.nbSupports.setText(nbSupports.toString() + " soutien(s)")
 
         val root: View = binding.root
 
@@ -112,7 +121,6 @@ class PropositionFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle presses on the action bar menu items
         when (item.itemId) {
             android.R.id.home -> {
                 activity?.onBackPressed()
