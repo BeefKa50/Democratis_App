@@ -10,6 +10,7 @@ import com.example.democratisapp.classes.PropositionSupports
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.recycler_adapters.RecyclerCommissionPropositionsAdapter
 import com.example.democratisapp.recycler_adapters.RecyclerPropositionAdapter
+import com.example.democratisapp.recycler_adapters.RecyclerPropositionAdapter.Companion.nbSupportsHome
 import com.example.democratisapp.ui.account.AccountFragment
 import com.example.democratisapp.ui.commission_propositions.CommissionPropositionsFragment
 import com.example.democratisapp.ui.commissions.CommissionsFragment
@@ -118,8 +119,6 @@ class UsefulThreads {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
 
             var nbMembers: Long = db.propositionSupportsDao().countSupports(propositionId)
-            System.out.println("Nb soutiens : " + nbMembers)
-            System.out.println("Texte actuel : " + RecyclerCommissionPropositionsAdapter.supportViews.get(propositionId)?.text)
 
             runOnUiThread(Runnable {
                 RecyclerCommissionPropositionsAdapter.supportViews.get(propositionId)?.setText(nbMembers.toString() + " soutien(s)")
@@ -203,6 +202,13 @@ class UsefulThreads {
                     password = this.password)
             )
             var acc: Account = db.accountDao().getUserById(id)
+        }
+    }
+
+    class ThreadCountSupport(var propositionId:Long, var context: Context): Thread() {
+        public override fun run() {
+            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+            nbSupportsHome = db.propositionSupportsDao().countSupports(propositionId)
         }
     }
 }

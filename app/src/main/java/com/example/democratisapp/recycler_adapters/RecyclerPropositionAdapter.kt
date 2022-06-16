@@ -30,6 +30,7 @@ class RecyclerPropositionAdapter(private val data: List<Proposition>, val parent
     companion object {
         private const val TAG = "PropositionViewHolder"
         lateinit var paragraphs:List<Paragraph>
+        var nbSupportsHome:Long = 0
     }
 
     inner class PropositionViewHolder(val binding: RecyclerItemPropositionsBinding) :
@@ -50,8 +51,13 @@ class RecyclerPropositionAdapter(private val data: List<Proposition>, val parent
 
         val proposition:Proposition = data[position]
 
+        var thSupports = UsefulThreads.ThreadCountSupport(propositionId = proposition.propositionId,parentFragment.requireContext())
+        thSupports.start()
+        thSupports.join()
+
+        holder.binding.propositionSupports.setText(nbSupportsHome.toString() + " soutien(s)")
+
         holder.binding.propositionName.setText(proposition.title)
-        holder.binding.propositionSupports.setText(proposition.nbSupports.toString() + " soutien(s)")
 
         var th = UsefulThreads.ThreadGetPropositionParagraphs2(
             proposition.propositionId,
