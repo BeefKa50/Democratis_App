@@ -96,6 +96,7 @@ class PropositionFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             _binding!!.propositionAbstractContent.justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
         }
+
         _binding!!.paragraphs.layoutManager = LinearLayoutManager(this.context)
         _binding!!.paragraphs.adapter = RecyclerParagraphAdapter(paragraphs.subList(1,paragraphs.size),this)
 
@@ -113,6 +114,8 @@ class PropositionFragment : Fragment() {
         th3?.start()
         th3?.join()
 
+        _binding!!.propositionTitle.setText(proposition.title)
+        _binding!!.propositionTitle.textAlignment = View.TEXT_ALIGNMENT_CENTER
         _binding!!.nbSupports.setText(nbSupports.toString() + " soutien(s)")
 
         val root: View = binding.root

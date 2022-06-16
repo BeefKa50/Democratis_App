@@ -1,6 +1,8 @@
 package com.example.democratisapp.recycler_adapters
 
 import android.content.Context
+import android.graphics.text.LineBreaker
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -68,6 +70,9 @@ class RecyclerPropositionAdapter(private val data: List<Proposition>, val parent
 
         var paragraph:Paragraph = paragraphs.get(0)
         holder.binding.propositionDescription.setText(paragraph.content)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            holder.binding.propositionDescription.justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
+        }
 
         holder.binding.card.setOnClickListener{
             val args = bundleOf("id" to proposition.propositionId.toString())
