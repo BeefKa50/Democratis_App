@@ -1,9 +1,7 @@
 package com.example.democratisapp.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
+import com.example.democratisapp.classes.AccountAndProposition
 import com.example.democratisapp.classes.PropositionSupports
 
 @Dao
@@ -19,4 +17,10 @@ interface PropositionSupportsDao {
 
     @Query("SELECT COUNT(*) FROM propositionSupports WHERE propositionId = :propositionId")
     fun countSupports(propositionId:Long):Long
+
+    @Query("SELECT * FROM propositionSupports")
+    fun getAllPropositionSupports() : List<PropositionSupports>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun putPropositionSupports(propositionSupports:List<PropositionSupports>)
 }

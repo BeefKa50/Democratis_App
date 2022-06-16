@@ -45,7 +45,7 @@ class CommissionsFragment : Fragment() {
         th.join()
 
         _binding!!.commissions.layoutManager = LinearLayoutManager(this.context)
-        _binding!!.commissions.adapter = commissions?.let { RecyclerCommissionAdapter(it,this) }
+        _binding!!.commissions.adapter = commissions?.let { RecyclerCommissionAdapter(it,this, from="commissions") }
 
         return root
     }

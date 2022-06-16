@@ -23,7 +23,12 @@ class MainActivity : AppCompatActivity() {
 
     class ThreadPrepopulate(var context: Context): Thread() {
         public override fun run() {
+
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
+
+            var accountsAndPropositions = db.accountAndPropositionDao().getAllAccountAndProposition()
+            var accountsAndCommissions = db.accountAndCommissionDao().getAllAccountAndCommission()
+            var propositionSupports = db.propositionSupportsDao().getAllPropositionSupports()
 
             db.commissionDao().insertDemocratie()
             db.commissionDao().insertEcologie()
@@ -42,6 +47,10 @@ class MainActivity : AppCompatActivity() {
             db.paragraphDao().insertFirstParagraphEcocide()
             db.paragraphDao().insertSecondParagraphEcocide()
             db.paragraphDao().insertFirstParagraphCorrida()
+
+            db.accountAndPropositionDao().putAccountAndPropositionObjects(accountsAndPropositions)
+            db.accountAndCommissionDao().putAccountAndCommissionObjects(accountsAndCommissions)
+            db.propositionSupportsDao().putPropositionSupports(propositionSupports)
         }
     }
 

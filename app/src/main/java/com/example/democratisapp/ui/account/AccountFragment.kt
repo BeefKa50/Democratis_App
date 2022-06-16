@@ -65,7 +65,7 @@ class AccountFragment : Fragment() {
         th2.join()
 
         _binding!!.commissions.layoutManager = LinearLayoutManager(this.context)
-        _binding!!.commissions.adapter = myCommissions?.let { RecyclerCommissionAdapter(it,this) }
+        _binding!!.commissions.adapter = myCommissions?.let { RecyclerCommissionAdapter(it,this, from="account") }
 
         var th3 = UsefulThreads.ThreadGetUserPropositions(this.requireContext())
         th3.start()

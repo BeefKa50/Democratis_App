@@ -25,7 +25,7 @@ import com.example.democratisapp.ui.commissions.CommissionsFragment
 import java.util.concurrent.ConcurrentHashMap
 
 
-class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFragment: Fragment) : RecyclerView.Adapter<RecyclerCommissionAdapter.CommissionViewHolder>(){
+class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFragment: Fragment, val from:String) : RecyclerView.Adapter<RecyclerCommissionAdapter.CommissionViewHolder>(){
     companion object {
         private const val TAG = "CommissionViewAdapter"
         var isMemberOfCommission:HashMap<Long,Boolean> = HashMap<Long,Boolean>()
@@ -162,7 +162,18 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
             if(isMemberOfCommission.get(commission.commissionId) == true){
                 val args = bundleOf("id" to commission.commissionId.toString())
                 val navController = parentFragment.findNavController()
-                navController.navigate(R.id.action_commissions_to_commissionPropositionsFragment, args)
+                if(from.equals("commissions")) {
+                    navController.navigate(
+                        R.id.action_commissions_to_commissionPropositionsFragment,
+                        args
+                    )
+                }
+                else if(from.equals("account")){
+                    navController.navigate(
+                        R.id.action_compte_to_commissionPropositionsFragment,
+                        args
+                    )
+                }
             }
             else{
                 Toast.makeText(parentFragment.requireContext(),
