@@ -131,9 +131,11 @@ class AddPropositionFragment : Fragment() {
                     thAddParagraph.join()
                 }
 
-                val args = bundleOf("id" to id)
+                val args = bundleOf("id" to id.toString())
                 val navController = this.findNavController()
                 navController.navigate(R.id.action_addPropositionFragment_to_commissionPropositionsFragment, args)
+
+                getParentFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
             }
             else{
                 Toast.makeText(this.requireContext(),

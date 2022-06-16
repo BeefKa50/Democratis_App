@@ -77,7 +77,7 @@ class RecyclerPropositionAdapter(private val data: List<Proposition>, val parent
         holder.binding.card.setOnClickListener{
             val args = bundleOf("id" to proposition.propositionId.toString())
             val navController = parentFragment.findNavController()
-            navController.navigate(R.id.action_accueil_to_propositionFragment, args)
+            navController.navigate(R.id.action_compte_to_propositionFragment, args)
         }
     }
 }
