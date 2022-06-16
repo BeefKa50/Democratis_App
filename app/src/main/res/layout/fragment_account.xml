@@ -15,42 +15,88 @@
         tools:context=".ui.account.AccountFragment"
         tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/pseudo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Pseudonyme public"
-            android:textColor="#020202"
-            android:textSize="20sp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="380dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/persoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Informations personnelles"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pseudo" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="364dp"
+                    android:layout_height="384dp"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <ImageView
+                        android:id="@+id/profilePicture"
+                        android:layout_width="192dp"
+                        android:layout_height="183dp"
+                        android:foreground="@drawable/avatar"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@tools:sample/avatars"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/persoInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="Informations personnelles"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/pseudo" />
+
+                    <EditText
+                        android:id="@+id/emailInput"
+                        android:layout_width="364dp"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="30dp"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:text="Adresse email"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/persoInfo" />
+
+                    <TextView
+                        android:id="@+id/pseudo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="Pseudonyme public"
+                        android:textColor="#020202"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/myCommissions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="30dp"
             android:text="Mes commissions"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailInput" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
         <TextView
             android:id="@+id/myCommissions2"
@@ -64,34 +110,6 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/commissions" />
-
-        <EditText
-            android:id="@+id/emailInput"
-            android:layout_width="364dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="10dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Adresse email"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/persoInfo" />
-
-        <ImageView
-            android:id="@+id/profilePicture"
-            android:layout_width="192dp"
-            android:layout_height="183dp"
-            android:layout_marginTop="104dp"
-            android:foreground="@drawable/avatar"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars"
-            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/commissions"
@@ -129,5 +147,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/propositions" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
