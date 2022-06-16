@@ -59,6 +59,18 @@
         <action
             android:id="@+id/action_commissionPropositionsFragment_to_propositionFragment"
             app:destination="@id/propositionFragment" />
+        <action
+            android:id="@+id/action_commissionPropositionsFragment_to_addPropositionFragment"
+            app:destination="@id/addPropositionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPropositionFragment"
+        android:name="com.example.democratisapp.ui.proposition.AddPropositionFragment"
+        android:label="Nouvelle proposition"
+        tools:layout="@layout/fragment_add_proposition" >
+        <action
+            android:id="@+id/action_addPropositionFragment_to_commissionPropositionsFragment"
+            app:destination="@id/commissionPropositionsFragment" />
     </fragment>
 
 </navigation>

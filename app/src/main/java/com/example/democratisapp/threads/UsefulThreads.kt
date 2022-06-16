@@ -183,10 +183,8 @@ class UsefulThreads {
     ): Thread() {
         public override fun run() {
             var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            System.out.println("Username : [" + username + "] ; password :[" + password + "]")
             LoginActivity.loginSuccessful = db.accountDao().login(username,password)
             MainActivity.profileId = db.accountDao().getUser(username,password)
-            System.out.println("IDDDD ----->>>> " + id)
         }
     }
 

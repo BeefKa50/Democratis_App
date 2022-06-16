@@ -1,40 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/propositionId"
+    android:id="@+id/coordinatorLay"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clipToPadding="true"
-    android:fillViewport="true">
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedView"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.proposition.PropositionFragment">
+        android:layout_height="wrap_content"
+        android:clipToPadding="true"
+        android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ui.proposition.PropositionFragment">
 
 
-        <TextView
-            android:id="@+id/submittedPropositions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="85dp"
-            android:gravity="center"
-            android:text="Propositions soumises pour le mois courant"
-            android:textColor="#000000"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/submittedPropositions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="85dp"
+                    android:gravity="center"
+                    android:text="Propositions soumises pour le mois courant"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/commissionPropositions"
-            android:layout_width="295sp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/submittedPropositions"
-            tools:listitem="@layout/recycler_item_commission_propositions" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/commissionPropositions"
+                    android:layout_width="295sp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/submittedPropositions"
+                    tools:listitem="@layout/recycler_item_commission_propositions" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="16dp"
+        android:contentDescription="Ajouter une proposition"
+        android:foregroundTint="#F3EDED"
+        android:src="@drawable/plus"
+        android:tint="#F1EEEE"
+        app:backgroundTint="@color/purple_500"
+        app:rippleColor="#F6CFCF" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

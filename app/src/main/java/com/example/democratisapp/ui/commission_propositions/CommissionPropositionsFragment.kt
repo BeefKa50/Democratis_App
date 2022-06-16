@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.democratis.classes.Proposition
 import com.example.democratisapp.R
@@ -67,6 +69,14 @@ class CommissionPropositionsFragment : Fragment() {
         _binding!!.commissionPropositions.layoutManager = LinearLayoutManager(this.context)
         _binding!!.commissionPropositions.adapter = RecyclerCommissionPropositionsAdapter(
             propositions,this)
+
+        _binding!!.fab.setOnClickListener{
+            val args = bundleOf("id" to id)
+            val navController = parentFragment?.findNavController()
+            if (navController != null) {
+                navController.navigate(R.id.action_commissionPropositionsFragment_to_addPropositionFragment,args)
+            }
+        }
 
         val root: View = binding.root
         return root
