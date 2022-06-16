@@ -47,11 +47,5 @@ class RecyclerParagraphAdapter(private val data: List<Paragraph>, val parentFrag
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             holder.binding.paragraphContent.justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
         }
-
-//        holder.binding.card.setOnClickListener{
-//            val args = bundleOf("id" to proposition.propositionId)
-//            val navController = parentFragment.findNavController()
-//            navController.navigate(R.id.action_accueil_to_propositionFragment, args)
-//        }
     }
 }

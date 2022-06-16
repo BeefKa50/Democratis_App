@@ -18,6 +18,7 @@ import com.example.democratisapp.databinding.ActivityLoginBinding
 
 import com.example.democratisapp.R
 import com.example.democratisapp.database.DemocratisDB
+import com.example.democratisapp.threads.UsefulThreads
 import com.example.democratisapp.ui.register.ui.login.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -26,19 +27,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     companion object{
-        private var loginSuccessful:Boolean = false
-    }
-
-    class ThreadCheckLogin(var username:String,var password:String,
-                        var context: Context
-    ): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            System.out.println("Username : [" + username + "] ; password :[" + password + "]")
-            loginSuccessful = db.accountDao().login(username,password)
-            profileId = db.accountDao().getUser(username,password)
-            System.out.println("IDDDD ----->>>> " + id)
-        }
+        var loginSuccessful:Boolean = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,8 +66,10 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed()
             }
             if (loginResult.success != null) {
-                var th:ThreadCheckLogin = ThreadCheckLogin(username.text.toString(),password.text.toString(),
-                this)
+                var th = UsefulThreads.ThreadCheckLogin(
+                    username.text.toString(), password.text.toString(),
+                    this
+                )
                 th.start()
 
                 th.join()

@@ -19,6 +19,7 @@ import com.example.democratisapp.R
 import com.example.democratisapp.classes.PropositionSupports
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.RecyclerItemCommissionPropositionsBinding
+import com.example.democratisapp.threads.UsefulThreads
 import java.util.concurrent.ConcurrentHashMap
 
 class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>, val parentFragment: Fragment) : RecyclerView.Adapter<RecyclerCommissionPropositionsAdapter.CommissionPropositionsViewHolder>(){
@@ -31,54 +32,6 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
 
     inner class CommissionPropositionsViewHolder(val binding: RecyclerItemCommissionPropositionsBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-    class ThreadIsSupporting(var propositionId:Long, var context: Context): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            isSupporting.put(propositionId,MainActivity.profileId?.let { db.propositionSupportsDao().isSupporting(it,propositionId) } == true)
-        }
-    }
-
-    class ThreadGetPropositionParagraphs(var propositionId:Long, var context: Context): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            paragraphs = db.paragraphDao().getPropositionParagraphs(propositionId)
-        }
-    }
-
-    class ThreadAddSupport(var propositionId:Long, var context: Context): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            MainActivity.profileId?.let { PropositionSupports(accountId= it, propositionId = propositionId) }
-                ?.let { db.propositionSupportsDao().addSupport(it) }
-        }
-    }
-
-    class ThreadDeleteSupport(var propositionId:Long, var context: Context): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            MainActivity.profileId?.let { db.propositionSupportsDao().deleteSupport(it,propositionId) }
-        }
-    }
-
-    class ThreadUpdateSupports(var propositionId:Long,
-                               var context: Context): Thread() {
-        @Synchronized private fun runOnUiThread(task:Runnable){
-            Handler(Looper.getMainLooper()).post(task)
-        }
-
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-
-            var nbMembers: Long = db.propositionSupportsDao().countSupports(propositionId)
-            System.out.println("Nb soutiens : " + nbMembers)
-            System.out.println("Texte actuel : " + supportViews.get(propositionId)?.text)
-
-            runOnUiThread(Runnable {
-                supportViews.get(propositionId)?.setText(nbMembers.toString() + " soutien(s)")
-            })
-        }
-    }
 
     override fun getItemCount(): Int = data.size
 
@@ -100,20 +53,26 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
         holder.binding.propositionName.setText(proposition.title)
         holder.binding.propositionSupports.setText(proposition.nbSupports.toString() + " soutien(s)")
 
-        var th = ThreadGetPropositionParagraphs(proposition.propositionId,parentFragment.requireContext())
+        var th = UsefulThreads.ThreadGetPropositionParagraphs(
+            proposition.propositionId,
+            parentFragment.requireContext()
+        )
         th.start()
         th.join()
 
         var paragraph: Paragraph = paragraphs.get(0)
         holder.binding.propositionDescription.setText(paragraph.content)
 
-        var thUpdate = ThreadUpdateSupports(proposition.propositionId,parentFragment.requireContext())
+        var thUpdate = UsefulThreads.ThreadUpdateSupports(
+            proposition.propositionId,
+            parentFragment.requireContext()
+        )
         thUpdate.start()
         thUpdate.join()
 
         var propositionId:Long = proposition.propositionId
 
-        var th2 = ThreadIsSupporting(propositionId,parentFragment.requireContext())
+        var th2 = UsefulThreads.ThreadIsSupporting(propositionId, parentFragment.requireContext())
         th2?.start()
         th2?.join()
 
@@ -128,12 +87,14 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
 
         holder.binding.buttonSupport.setOnClickListener{
 
-            var th = ThreadIsSupporting(propositionId,parentFragment.requireContext())
+            var th =
+                UsefulThreads.ThreadIsSupporting(propositionId, parentFragment.requireContext())
             th?.start()
             th?.join()
 
             if(isSupporting.get(propositionId) == false  ) {
-                var th2 = ThreadAddSupport(propositionId,parentFragment.requireContext())
+                var th2 =
+                    UsefulThreads.ThreadAddSupport(propositionId, parentFragment.requireContext())
                 th2?.start()
                 th2?.join()
 
@@ -141,7 +102,10 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
                 holder.binding.buttonSupport.setBackgroundColor(ContextCompat.getColor(parentFragment.requireContext(), R.color.red))
             }
             else{
-                var th2 = ThreadDeleteSupport(propositionId,parentFragment.requireContext())
+                var th2 = UsefulThreads.ThreadDeleteSupport(
+                    propositionId,
+                    parentFragment.requireContext()
+                )
                 th2?.start()
                 th2?.join()
 
@@ -149,7 +113,8 @@ class RecyclerCommissionPropositionsAdapter(private val data: List<Proposition>,
                 holder.binding.buttonSupport.setBackgroundColor(ContextCompat.getColor(parentFragment.requireContext(), R.color.purple_500))
             }
 
-            var thUpdate = ThreadUpdateSupports(propositionId,parentFragment.requireContext())
+            var thUpdate =
+                UsefulThreads.ThreadUpdateSupports(propositionId, parentFragment.requireContext())
             thUpdate.start()
             thUpdate.join()
         }

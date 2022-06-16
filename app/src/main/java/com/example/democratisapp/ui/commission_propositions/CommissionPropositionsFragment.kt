@@ -15,6 +15,7 @@ import com.example.democratisapp.databinding.FragmentCommissionPropositionsBindi
 import com.example.democratisapp.databinding.FragmentPropositionBinding
 import com.example.democratisapp.recycler_adapters.RecyclerCommissionPropositionsAdapter
 import com.example.democratisapp.recycler_adapters.RecyclerParagraphAdapter
+import com.example.democratisapp.threads.UsefulThreads
 import com.example.democratisapp.ui.proposition.PropositionFragment
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,13 +38,6 @@ class CommissionPropositionsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    class ThreadGetCommissionPropositions(var commissionId:Long, var context: Context): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            propositions = db.propositionDao().getCommissionPropositions(commissionId)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true);
@@ -61,7 +55,12 @@ class CommissionPropositionsFragment : Fragment() {
         _binding = FragmentCommissionPropositionsBinding.inflate(inflater, container, false)
         val id:String? = arguments?.getString("id")
 
-        var th = id?.let { ThreadGetCommissionPropositions(it.toLong(),this.requireContext()) }
+        var th = id?.let {
+            UsefulThreads.ThreadGetCommissionPropositions(
+                it.toLong(),
+                this.requireContext()
+            )
+        }
         th?.start()
         th?.join()
 

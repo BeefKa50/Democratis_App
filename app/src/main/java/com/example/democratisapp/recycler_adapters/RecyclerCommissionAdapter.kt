@@ -20,6 +20,7 @@ import com.example.democratisapp.R
 import com.example.democratisapp.classes.AccountAndCommission
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.RecyclerItemCommissionsBinding
+import com.example.democratisapp.threads.UsefulThreads
 import com.example.democratisapp.ui.commissions.CommissionsFragment
 import java.util.concurrent.ConcurrentHashMap
 
@@ -33,63 +34,6 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
 
     inner class CommissionViewHolder(val binding: RecyclerItemCommissionsBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-    class ThreadAddNewMemberToCommission(var accountId:Long,
-                                         var commissionId:Long,
-                                         var context: Context): Thread() {
-        public override fun run() {
-            var th =
-                MainActivity.profileId?.let { ThreadIsMemberOfCommission(it,commissionId,context) }
-            th?.start()
-            th?.join()
-            if(isMemberOfCommission.get(commissionId) == false) {
-                var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-                db.accountAndCommissionDao().addNewMemberToCommission(AccountAndCommission(accountId=accountId, commissionId = commissionId))
-            }
-        }
-    }
-
-    class ThreadDeleteMemberInCommission(var accountId:Long,
-                                         var commissionId:Long,
-                                         var context: Context): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            var th =
-                MainActivity.profileId?.let { ThreadIsMemberOfCommission(it,commissionId,context) }
-            th?.start()
-            th?.join()
-
-            if(isMemberOfCommission.get(commissionId) == true) {
-                db.commissionDao().deleteMemberInCommission(accountId, commissionId)
-            }
-        }
-    }
-
-    class ThreadIsMemberOfCommission(var accountId:Long,
-                                         var commissionId:Long,
-                                         var context: Context): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            isMemberOfCommission.put(commissionId,db.commissionDao().isMemberOfCommission(accountId,commissionId))
-        }
-    }
-
-    class ThreadUpdateCommissionMembers(var commissionId:Long,
-                                        var context: Context): Thread() {
-        @Synchronized private fun runOnUiThread(task:Runnable){
-            Handler(Looper.getMainLooper()).post(task)
-        }
-
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-
-            var nbMembers: Long = db.commissionDao().countCommissionMembers(commissionId)
-
-            runOnUiThread(Runnable {
-                membersTextViews.get(commissionId)?.setText(nbMembers.toString() + " membre(s)")
-            })
-        }
-    }
 
     override fun getItemCount(): Int = data.size
 
@@ -121,7 +65,10 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
 
         membersTextViews.put(commission.commissionId,holder.binding.commissionMembers)
 
-       var thUpdate = ThreadUpdateCommissionMembers(commission.commissionId,parentFragment.requireContext())
+       var thUpdate = UsefulThreads.ThreadUpdateCommissionMembers(
+           commission.commissionId,
+           parentFragment.requireContext()
+       )
        thUpdate.start()
        thUpdate.join()
 
@@ -129,7 +76,13 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
         holder.binding.commissionDescription.text = commission.desc
 
         var th =
-            MainActivity.profileId?.let { it1 -> ThreadIsMemberOfCommission(it1,commission.commissionId, parentFragment.requireContext()) }
+            MainActivity.profileId?.let { it1 ->
+                UsefulThreads.ThreadIsMemberOfCommission(
+                    it1,
+                    commission.commissionId,
+                    parentFragment.requireContext()
+                )
+            }
         th?.start()
         th?.join()
 
@@ -147,13 +100,19 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
             var commissionId:Long = commission.commissionId
 
             var th =
-                accountId?.let { it1 -> ThreadIsMemberOfCommission(it1,commissionId, parentFragment.requireContext()) }
+                accountId?.let { it1 ->
+                    UsefulThreads.ThreadIsMemberOfCommission(
+                        it1,
+                        commissionId,
+                        parentFragment.requireContext()
+                    )
+                }
             th?.start()
             th?.join()
 
             if(isMemberOfCommission.get(commissionId) == false  ) {
                 var th2 = accountId?.let { it1 ->
-                    ThreadAddNewMemberToCommission(
+                    UsefulThreads.ThreadAddNewMemberToCommission(
                         it1,
                         commissionId,
                         parentFragment.requireContext()
@@ -166,7 +125,13 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
                 holder.binding.joinCommission.setBackgroundColor(ContextCompat.getColor(parentFragment.requireContext(), R.color.red))
             }
             else{
-                var th2 = accountId?.let { it1 -> ThreadDeleteMemberInCommission(it1,commissionId,parentFragment.requireContext()) }
+                var th2 = accountId?.let { it1 ->
+                    UsefulThreads.ThreadDeleteMemberInCommission(
+                        it1,
+                        commissionId,
+                        parentFragment.requireContext()
+                    )
+                }
                 th2?.start()
                 th2?.join()
 
@@ -174,14 +139,23 @@ class RecyclerCommissionAdapter(private val data: List<Commission>, val parentFr
                 holder.binding.joinCommission.setBackgroundColor(ContextCompat.getColor(parentFragment.requireContext(), R.color.purple_500))
             }
 
-            var thUpdate = ThreadUpdateCommissionMembers(commission.commissionId,parentFragment.requireContext())
+            var thUpdate = UsefulThreads.ThreadUpdateCommissionMembers(
+                commission.commissionId,
+                parentFragment.requireContext()
+            )
             thUpdate.start()
             thUpdate.join()
         }
 
         holder.binding.card.setOnClickListener{
             var th =
-                MainActivity.profileId?.let { it1 -> ThreadIsMemberOfCommission(it1,commission.commissionId, parentFragment.requireContext()) }
+                MainActivity.profileId?.let { it1 ->
+                    UsefulThreads.ThreadIsMemberOfCommission(
+                        it1,
+                        commission.commissionId,
+                        parentFragment.requireContext()
+                    )
+                }
             th?.start()
             th?.join()
 

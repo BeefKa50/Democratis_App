@@ -14,6 +14,7 @@ import com.example.democratisapp.MainActivity
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.FragmentHomeBinding
 import com.example.democratisapp.recycler_adapters.RecyclerPropositionAdapter
+import com.example.democratisapp.threads.UsefulThreads
 import com.example.democratisapp.ui.commissions.CommissionsFragment
 import com.example.kotlindeezer.ui.RecyclerCommissionAdapter
 
@@ -29,13 +30,6 @@ class HomeFragment : Fragment() {
         lateinit var propositions:List<Proposition>
     }
 
-    class ThreadGetAllPropositions(var context: Context): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            propositions = db.propositionDao().getAllPropositions()
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +41,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        var th = ThreadGetAllPropositions(this.requireContext())
+        var th = UsefulThreads.ThreadGetAllPropositions(this.requireContext())
         th.start()
         th.join()
 

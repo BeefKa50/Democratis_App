@@ -22,6 +22,7 @@ import com.example.democratisapp.classes.AccountAndCommission
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.RecyclerItemCommissionsBinding
 import com.example.democratisapp.databinding.RecyclerItemPropositionsBinding
+import com.example.democratisapp.threads.UsefulThreads
 import com.example.democratisapp.ui.commissions.CommissionsFragment
 import java.util.concurrent.ConcurrentHashMap
 
@@ -33,13 +34,6 @@ class RecyclerPropositionAdapter(private val data: List<Proposition>, val parent
 
     inner class PropositionViewHolder(val binding: RecyclerItemPropositionsBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-    class ThreadGetPropositionParagraphs(var propositionId:Long, var context: Context): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            paragraphs = db.paragraphDao().getPropositionParagraphs(propositionId)
-        }
-    }
 
     override fun getItemCount(): Int = data.size
 
@@ -59,7 +53,10 @@ class RecyclerPropositionAdapter(private val data: List<Proposition>, val parent
         holder.binding.propositionName.setText(proposition.title)
         holder.binding.propositionSupports.setText(proposition.nbSupports.toString() + " soutien(s)")
 
-        var th = ThreadGetPropositionParagraphs(proposition.propositionId,parentFragment.requireContext())
+        var th = UsefulThreads.ThreadGetPropositionParagraphs2(
+            proposition.propositionId,
+            parentFragment.requireContext()
+        )
         th.start()
         th.join()
 

@@ -15,6 +15,7 @@ import com.example.democratis.classes.Commission
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.FragmentAccountBinding
+import com.example.democratisapp.threads.UsefulThreads
 import com.example.democratisapp.ui.commissions.CommissionsFragment
 import com.example.democratisapp.ui.login.LoginActivity
 import com.example.kotlindeezer.ui.RecyclerCommissionAdapter
@@ -32,24 +33,6 @@ class AccountFragment : Fragment() {
         lateinit var myCommissions:List<Commission>
     }
 
-    class ThreadGetUser(var userId:Long,
-                           var context: Context
-    ): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            account = db.accountDao().getUserById(userId)
-        }
-    }
-
-
-    class ThreadGetUserCommissions(var context: Context): Thread() {
-        public override fun run() {
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            myCommissions = MainActivity.profileId?.let { db.accountDao().getUserCommissions(it) }!!
-            for(commission in myCommissions) System.out.println("Commission " + commission.name)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,9 +44,9 @@ class AccountFragment : Fragment() {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        var th: ThreadGetUser? = null
+        var th: UsefulThreads.ThreadGetUser? = null
         if(MainActivity.profileId != null) {
-            th = ThreadGetUser(MainActivity.profileId!!,this.requireContext())
+            th = UsefulThreads.ThreadGetUser(MainActivity.profileId!!, this.requireContext())
         }
 
         if (th != null) {
@@ -73,7 +56,7 @@ class AccountFragment : Fragment() {
         _binding!!.pseudo.setText(account?.username)
         _binding!!.emailInput.setText(account?.mail)
 
-        var th2 = ThreadGetUserCommissions(this.requireContext())
+        var th2 = UsefulThreads.ThreadGetUserCommissions(this.requireContext())
         th2.start()
         th2.join()
 

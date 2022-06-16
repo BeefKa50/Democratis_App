@@ -12,6 +12,7 @@ import com.example.democratis.classes.Commission
 import com.example.democratisapp.MainActivity
 import com.example.democratisapp.database.DemocratisDB
 import com.example.democratisapp.databinding.FragmentCommissionsBinding
+import com.example.democratisapp.threads.UsefulThreads
 import com.example.kotlindeezer.ui.RecyclerCommissionAdapter
 
 class CommissionsFragment : Fragment() {
@@ -27,18 +28,6 @@ class CommissionsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    class ThreadGetAllCommissions(var context: Context): Thread() {
-        public override fun run() {
-            System.out.println("Debut du thread get all commissions...")
-            var db: DemocratisDB = DemocratisDB.getDatabase(this.context)
-            commissions = db.commissionDao().getAllCommissions()
-            System.out.println("Commissions : ")
-            for(commission in commissions!!){
-                System.out.println("Nom de la commission : " + commission.name)
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,7 +40,7 @@ class CommissionsFragment : Fragment() {
         val root: View = binding.root
         fragmentContext = this.requireContext()
 
-        var th = ThreadGetAllCommissions(this.requireContext())
+        var th = UsefulThreads.ThreadGetAllCommissions(this.requireContext())
         th.start()
         th.join()
 
